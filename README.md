@@ -24,5 +24,5 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
-## Project
+## References
 https://auth0.com/blog/beginner-vuejs-tutorial-with-user-login/
