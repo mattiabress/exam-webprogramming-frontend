@@ -25,4 +25,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
 ## References
-https://auth0.com/blog/beginner-vuejs-tutorial-with-user-login/
+* https://auth0.com/blog/beginner-vuejs-tutorial-with-user-login/
+* https://linuxhint.com/install-use-bootstrap-with-vue-js/
+* https://mdbootstrap.com/docs/standard/extended/login/#!
+* https://leaflet.github.io/Leaflet.draw/docs/leaflet-draw-latest.html
