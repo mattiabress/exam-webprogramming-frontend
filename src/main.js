@@ -5,9 +5,9 @@ import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+
 import 'leaflet/dist/leaflet.css';
-
-
+import 'leaflet-draw/dist/leaflet.draw.css';
 
 
 Vue.use(BootstrapVue);

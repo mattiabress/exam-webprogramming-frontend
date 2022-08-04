@@ -1,11 +1,13 @@
 <template>
   <div class="about">
 
-    <l-map ref="myMap" @ready="doSomethingOnReady()" style="height: 300px" :zoom="zoom" :center="center">
+    <l-map ref="myMap" @ready="doSomethingOnReady()" style="height: 500px" :zoom="zoom" :center="center"
+      :drawControl="drawControl">
+      <l-draw></l-draw>
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <l-marker :lat-lng="markerLatLng"></l-marker>
       <l-feature-group ref="features"></l-feature-group>
-      <l-control position="bottomleft" ></l-control>
+      <l-geo-json :geojson="geojson"></l-geo-json>
     </l-map>
 
     <br>
@@ -49,9 +51,12 @@
 </template>
 <script>
 // @ is an alias to /src
-import { LMap, LTileLayer,LFeatureGroup, LMarker } from 'vue2-leaflet';
+import { LMap, LTileLayer, LFeatureGroup, LMarker, LGeoJson } from 'vue2-leaflet';
 import Api from '@/utilities/trip/tripApi'
+import L from 'leaflet';
+import LDraw from 'leaflet-draw';
 
+//TODO: rempove LGeoJson
 export default {
   name: 'Trip',
   components: {
@@ -59,7 +64,8 @@ export default {
     LTileLayer,
     LMarker,
     LFeatureGroup,
-    
+    LDraw,
+    LGeoJson
   },
   data() {
     return {
@@ -69,6 +75,8 @@ export default {
       center: [45.6495, 13.7768],
       markerLatLng: [45.6495, 13.7768],
       editmode: false,
+      drawControl: true,
+      geojson: null,
       trip: {
         id: 1,
         name: "nome",
@@ -94,25 +102,61 @@ export default {
       this.trip = response.data;
     },
     doSomethingOnReady() {
-      this.map = this.$refs.myMap.mapObject
+      let map = this.$refs.myMap.mapObject
+
       // FeatureGroup is to store editable layers
-      var drawnItems = new LMap.FeatureGroup();
-      this.map.addLayer(drawnItems);
-      var drawControl = new LMap.Control.Draw({
+      var drawnItems = new L.FeatureGroup();
+      map.addLayer(drawnItems);
+      var drawControl = new L.Control.Draw({
+        draw: {
+          polygon: false,
+          circle: false,
+          rectangle: false,
+          circlemarker: false
+        },
         edit: {
           featureGroup: drawnItems
         }
       });
-      this.map.addControl(drawControl);
+
+      map.addControl(drawControl);
+
+
+
+
+      L.control.layers({}, { 'drawlayer': drawnItems }, { position: 'topleft', collapsed: false }).addTo(map);
+
+
+      /*
+      map.on('draw:edited', function (e) {
+        var layers = e.layers;
+        layers.eachLayer(function (layer) {
+          //do whatever you want; most likely save back to db
+          console.log(layer)
+        });
+      });*/
+      map.on(L.Draw.Event.CREATED, function (event) {
+        var layer = event.layer;
+        //var data = L.FeatureGroup().toGeoJSON();
+        console.log(drawnItems.toGeoJSON())
+        drawnItems.addLayer(layer);
+      });
+
     },
+    async loadGeoJSON() {
+      const response = await fetch('https://rawgit.com/gregoiredavid/france-geojson/master/regions/pays-de-la-loire/communes-pays-de-la-loire.geojson');
+      this.geojson = await response.json();
+
+    }
   },
 
   mounted: function () {
     if (this.$route.params.tripID != null) {
       this.editmode = true;
-      this.loadTrip(this.$route.params.tripID);
+      //this.loadTrip(this.$route.params.tripID); //TODO: sistemare
       this.trip.id = this.$route.params.tripID
     }
+    this.loadGeoJSON()
 
   }
 }
