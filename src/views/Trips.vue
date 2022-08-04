@@ -5,24 +5,42 @@
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
     <l-marker :lat-lng="markerLatLng"></l-marker>
     </l-map>-->
-    <h2>I miei viaggi</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Data</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="trip in trips" :key="trip.id">
-          <!--<th scope="row"><a href="#" @click.prevent="loadTrip(trip.id)">{{ trip.id }}</a></th>-->
-          <th scope="row"><router-link :to="{ name: 'trip', params: { tripID: trip.id }}">{{ trip.id }}</router-link></th>
-          <td>{{ trip.name }}</td>
-          <td>{{ trip.autore }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="container">
+      <h2>I miei viaggi</h2>
+      <router-link :to="{ name: 'trip' }"><button type="button" class="btn btn-success">Inserisci viaggio</button>
+      </router-link>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Data</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="trip in trips" :key="trip.id">
+            <!--<th scope="row"><a href="#" @click.prevent="loadTrip(trip.id)">{{ trip.id }}</a></th>-->
+            <th scope="row">
+              <router-link :to="{ name: 'trip', params: { tripID: trip.id } }">{{ trip.id }}</router-link>
+            </th>
+            <td>{{ trip.name }}</td>
+            <td>{{ trip.autore }}</td>
+            <td><button type="button" class="btn btn-primary">
+                <b-icon-eye></b-icon-eye>
+              </button>
+              <button type="button" class="btn btn-success">
+                <b-icon-pencil></b-icon-pencil>
+              </button>
+              <button type="button" class="btn btn-danger">
+                <b-icon-trash></b-icon-trash>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </template>
