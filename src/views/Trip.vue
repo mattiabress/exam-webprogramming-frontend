@@ -1,26 +1,43 @@
 <template>
   <div class="about">
     <div class="container">
-      
-      <h2>Viaggio</h2>
+
+      <h2>Viaggio a: {{ trip.name }}</h2>
       <form>
-      <div class="row">
-        <div class="col">
-          <label for="name">Name</label><input id="name" type="text" v-model="trip.name">
+        <div class="row">
+          <div class="col">
+            <input type="button" value="Indietro" @click.prevent="backOnBooks()">
+          </div>
+          <div class="col">
+            <input v-if="editmode" type="button" value="Modifica" @click.prevent="editTrip()">
+          </div>
+          <div class="col">
+            <input type="button" value="Aggiungi" @click.prevent="addTrip()">
+          </div>
+          <div class="col">
+            <input type="button" value="path" @click.prevent="setPath()">
+          </div>
+          <div class="col">
+            <input type="button" value="load" @click.prevent="loadGeoJSON()">
+          </div>
         </div>
-        <div class="col">
-          <label for="tripDate">tripDate</label><input id="tripDate" type="date" v-model="trip.tripDate">
+        <div class="row">
+          <div class="col">
+            <label for="name">Name</label><input id="name" type="text" v-model="trip.name">
+          </div>
+          <div class="col">
+            <label for="tripDate">tripDate</label><input id="tripDate" type="date" v-model="trip.tripDate">
+          </div>
+          <div class="col">
+            <label for="vehicle">vehicle</label><input id="vehicle" type="text" v-model="trip.vehicle">
+          </div>
         </div>
-        <div class="col">
-          <label for="vehicle">vehicle</label><input id="vehicle" type="text" v-model="trip.vehicle">
-        </div>
-      </div>
-      
-        <input type="button" value="Indietro" @click.prevent="backOnBooks()">
-        <input v-if="editmode" type="button" value="Modifica" @click.prevent="editTrip()">
-        <input type="button" value="Aggiungi" @click.prevent="addTrip()">
-        <input type="button" value="path" @click.prevent="setPath()">
-        <input type="button" value="load" @click.prevent="loadGeoJSON()">
+      <br>
+        
+        
+        
+        
+        
       </form>
 
 
@@ -99,7 +116,6 @@ export default {
       attribution: '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       zoom: 15,
       center: [45.6495, 13.7768],
-      markerLatLng: [45.6495, 13.7768],
       editmode: false,
       drawControl: true,
       geojson: null,

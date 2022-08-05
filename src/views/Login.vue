@@ -7,14 +7,11 @@
         <div class="row gx-lg-5 align-items-center mb-5">
           <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
             <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-              The best offer <br />
-              <span style="color: hsl(218, 81%, 75%)">for your business</span>
+               Il tuo diario dei viaggi <br />
+              <span style="color: hsl(218, 81%, 75%)">Ti accompagna in tutti i viaggi</span>
             </h1>
             <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Temporibus, expedita iusto veniam atque, magni tempora mollitia
-              dolorum consequatur nulla, neque debitis eos reprehenderit quasi
-              ab ipsum nisi dolorem modi. Quos?
+              “Un viaggio non inizia nel momento in cui partiamo né finisce nel momento in cui raggiungiamo la meta. I realtà comincia molto prima e non finisce mai, dato che il nastro dei ricordi continua a scorrerci dentro anche dopo che ci siamo fermati. È il virus del viaggio, malattia sostanzialmente incurabile” Ryszard Kapuscinski
             </p>
           </div>
 

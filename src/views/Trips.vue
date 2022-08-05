@@ -27,13 +27,13 @@
             </th>
             <td>{{ trip.name }}</td>
             <td>{{ trip.autore }}</td>
-            <td><button type="button" class="btn btn-primary">
-                <b-icon-eye></b-icon-eye>
-              </button>
-              <button type="button" class="btn btn-success">
-                <b-icon-pencil></b-icon-pencil>
-              </button>
-              <button type="button" class="btn btn-danger">
+            <td>
+              <router-link :to="{ name: 'trip', params: { tripID: trip.id } }">
+                <button type="button" class="btn btn-success">
+                  <b-icon-pencil></b-icon-pencil>
+                </button>
+              </router-link>
+              <button type="button" class="btn btn-danger" v-on:click="deleteTrip(trip.id)">
                 <b-icon-trash></b-icon-trash>
               </button>
             </td>
@@ -47,6 +47,7 @@
 <script>
 // @ is an alias to /src
 //import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+import Api from '@/utilities/trip/tripApi'
 
 export default {
   name: 'Trips',
@@ -73,8 +74,19 @@ export default {
     };
   },
   methods: {
-    loadTrip: function () {
+    loadTrip: async function () {
+      this.trips = await Api.getAllTrips()
+    },
+    async deleteTrip(tripId) {
+      if (confirm("Vuoi veramente elimare questo viaggio?")) {
+        const response = await Api.deleteTrip(tripId);
+        if (response.status == 200) {
+          alert("cancellato correttamente");
+        } else {
+          alert("non cancellato");
+        }
 
+      }
     }
   }
 }
