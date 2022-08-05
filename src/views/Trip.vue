@@ -6,7 +6,8 @@
       <form>
         <div class="row">
           <div class="col">
-            <input type="button" value="Indietro" @click.prevent="backOnBooks()">
+            <router-link :to="{ name: 'trips' }"><button type="button" class="btn btn-success">Indietro</button></router-link>
+            
           </div>
           <div class="col">
             <input v-if="editmode" type="button" value="Modifica" @click.prevent="editTrip()">
@@ -143,6 +144,9 @@ export default {
       const response = await Api.updateTrip(this.trip.id, this.trip);
       this.trip = response.data;
     },
+
+
+    //map methods
     setUpTheMap() {
       let map = this.$refs.myMap.mapObject
       // FeatureGroup is to store editable layers

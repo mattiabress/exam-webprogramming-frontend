@@ -5,7 +5,7 @@
       <router-link to="/signup">Signup</router-link>|
       <router-link to="/login">Login</router-link> |
       <router-link to="/trips">Trips</router-link> |
-      <router-link to="/trips">Logout</router-link> 
+      <input type="button" value="Logout" @click.prevent="logout()">
     </div>
     <router-view/>
   </div>
@@ -33,3 +33,27 @@
   color: #42b983;
 }
 </style>
+<script>
+// @ is an alias to /src
+import Api from '@/utilities/user/userApi'
+export default {
+  name: 'navbar',
+  components: {
+  },
+  data: function () {
+    return {
+    }
+  },
+  methods: {
+    
+    logout: async function () {
+      //remove all data stored in the local storage before logout
+      const response= await Api.logout();
+      console.log(response)
+    }
+  },
+  mounted: function () {
+
+  }
+}
+</script>

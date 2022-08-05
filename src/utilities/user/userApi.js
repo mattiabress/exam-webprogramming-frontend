@@ -17,4 +17,7 @@ export default {
   deleteUser(userId) {
     return Api().delete(base_route_user + '/' + userId)
   },
+  logout() {
+    return Api().delete(base_route_user + '/logout')
+  },
 }

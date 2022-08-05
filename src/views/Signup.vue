@@ -135,9 +135,6 @@ export default {
     }
   },
   methods: {
-    reverseMessage: function () {
-      this.message = this.message.split('').reverse().join('')
-    },
     signup: function () {
       const data_signup = {
         firstname: this.firstname,

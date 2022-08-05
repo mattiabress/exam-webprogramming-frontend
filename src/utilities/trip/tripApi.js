@@ -8,6 +8,9 @@ export default {
   getTripByID (tripId) {
     return Api().get(base_route_route+"/"+tripId)
   },
+  getAllTripsByDate (date) {
+    return Api().get(base_route_route+"?date="+date)
+  },
   createTrip (trip) {
     return Api().post(base_route_route, trip)
   },

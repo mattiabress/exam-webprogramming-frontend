@@ -8,8 +8,8 @@
     <div class="container">
       <h2>I miei viaggi</h2>
       <router-link :to="{ name: 'trip' }"><button type="button" class="btn btn-success">Inserisci viaggio</button>
-      </router-link>
-
+      </router-link><br><br>
+      <input type="date" v-model="searchDate" @input="getAllTripsByDate()" />
       <table class="table">
         <thead>
           <tr>
@@ -69,15 +69,17 @@ export default {
         { id: 1, name: "adda", tripDate: "19/2/22" },
         { id: 2, name: "adddsaa", tripDate: "20/2/22" },
         { id: 3, name: "a131dda", tripDate: "21/2/22" },
-      ]
+      ],
+      searchDate:null
 
     };
   },
   methods: {
     loadTrip: async function () {
-      this.trips = await Api.getAllTrips()
+      const response = await Api.getAllTrips();
+      this.trips = response.data;
     },
-    async deleteTrip(tripId) {
+    deleteTrip: async function(tripId) {
       if (confirm("Vuoi veramente elimare questo viaggio?")) {
         const response = await Api.deleteTrip(tripId);
         if (response.status == 200) {
@@ -87,6 +89,10 @@ export default {
         }
 
       }
+    },
+    async getAllTripsByDate(){
+      const response = await Api.getAllTripsByDate(this.searchDate);
+      this.trips = response.data;
     }
   }
 }
