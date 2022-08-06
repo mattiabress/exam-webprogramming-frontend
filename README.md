@@ -40,4 +40,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * https://blog.logrocket.com/building-an-interactive-map-with-vue-and-leaflet/
 * https://leafletjs.com/examples/quick-start/
 https://travishorn.com/interactive-maps-with-vue-leaflet-5430527353c8
+https://stackoverflow.com/questions/37362709/how-to-edit-loaded-geojson-with-leaflet
 
