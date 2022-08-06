@@ -13,9 +13,6 @@ import { authGuard } from '../auth/AuthGuard';
 Vue.use(VueRouter)
 Vue.use(VueAxios, axios)
 
-
-
-
 const routes = [
   {
     path: '/',
@@ -31,6 +28,12 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/trip',
+    name: 'trip',
+    component: Trip,
+    beforeEnter: authGuard,
   },
   {
     path: '/trip/:tripID',

@@ -10,10 +10,10 @@
             
           </div>
           <div class="col">
-            <input v-if="editmode" type="button" value="Modifica" @click.prevent="editTrip()">
           </div>
           <div class="col">
-            <input type="button" value="Aggiungi" @click.prevent="addTrip()">
+            <input v-if="editmode" type="button" value="Modifica" @click.prevent="editTrip()"> <!-- TODO: may better with if else -->
+            <input v-if="!editmode" type="button" value="Aggiungi" @click.prevent="addTrip()">
           </div>
 
           <!-- <div class="col">
@@ -187,13 +187,13 @@ export default {
   },
 
   created: async function () {
-    //const ID = Number(this.$route.params.id);
     if ('tripID' in this.$route.params && this.$route.params.tripID != null) { //TODO: fix it
       this.editmode = true;
-      await this.loadTrip(this.$route.params.tripID); //TODO: sistemare
-      this.trip.id = this.$route.params.tripID
+      await this.loadTrip(Number(this.$route.params.tripID)); //TODO: sistemare
+      this.trip.id = Number(this.$route.params.tripID)
+    }else{
+      this.editmode = false;
     }
-
   }
 }
 </script>
