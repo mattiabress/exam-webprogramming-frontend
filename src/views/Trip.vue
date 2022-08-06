@@ -15,12 +15,14 @@
           <div class="col">
             <input type="button" value="Aggiungi" @click.prevent="addTrip()">
           </div>
-          <div class="col">
+
+          <!-- <div class="col">
             <input type="button" value="path" @click.prevent="setPath()">
           </div>
           <div class="col">
             <input type="button" value="load" @click.prevent="loadGeoJSON()">
-          </div>
+          </div> -->
+
         </div>
         <div class="row">
           <div class="col">
@@ -33,15 +35,8 @@
             <label for="vehicle">vehicle</label><input id="vehicle" type="text" v-model="trip.vehicle">
           </div>
         </div>
-      <br>
-        
-        
-        
-        
-        
       </form>
-
-
+       <br>
       <l-map ref="myMap" @ready="setUpTheMap()" style="height: 500px" :zoom="zoom" :center="center"
         :drawControl="drawControl">
         <l-draw></l-draw>
@@ -53,22 +48,21 @@
 
       <br>
       <br>
-      <form>
         <label for="id">id</label>
         <br>
-        <input id="id" type="text" v-model="trip.id">
+        {{trip.id}}
         <br>
         <label for="name">Name</label>
         <br>
-        <input id="name" type="text" v-model="trip.name">
+        {{trip.name}}
         <br>
         <label for="tripDate">tripDate</label>
         <br>
-        <input id="tripDate" type="date" v-model="trip.tripDate">
+        {{trip.tripDate}}
         <br>
         <label for="vehicle">vehicle</label>
         <br>
-        <input id="vehicle" type="text" v-model="trip.vehicle">
+        {{trip.vehicle}}
         <br>
         <label for="path">path</label>
         <br>
@@ -76,19 +70,13 @@
         <br>
         <label for="mainStages">mainStages</label>
         <br>
-        <input id="mainStages" type="text" v-model="trip.mainStages">
+        {{trip.mainStages}}
         <br>
         <label for="user">user</label>
         <br>
-        <input id="user" type="text" v-model="trip.user">
+        {{trip.user}}
         <br>
         <br>
-        <input type="button" value="Indietro" @click.prevent="backOnBooks()">
-        <input v-if="editmode" type="button" value="Modifica" @click.prevent="editTrip()">
-        <input type="button" value="Aggiungi" @click.prevent="addTrip()">
-        <input type="button" value="path" @click.prevent="setPath()">
-        <input type="button" value="load" @click.prevent="loadGeoJSON()">
-      </form>
     </div>
   </div>
 
@@ -96,7 +84,7 @@
 <script>
 // @ is an alias to /src
 import { LMap, LTileLayer, LFeatureGroup, LMarker, LGeoJson } from 'vue2-leaflet';
-import Api from '@/utilities/trip/tripApi'
+import TripApi from '@/utilities/trip/tripApi'
 import L from 'leaflet';
 import LDraw from 'leaflet-draw';
 
@@ -127,21 +115,25 @@ export default {
         vehicle: null,
         path: {},
         mainStages: null,
-        user: null
       }
     };
   },
   methods: {
     loadTrip: async function (tripId) {
-      const response = await Api.getTripByID(tripId);
-      this.trip = response.data;
+      const response = await TripApi.getTripByID(tripId);
+      if(response.status==200)
+        this.trip = response.data;
     },
     addTrip: async function () {
-      const response = await Api.createTrip(this.trip);
+      //set trip path
+      this.trip.path=this.geojson;
+      const response = await TripApi.createTrip(this.trip);
       this.trip = response.data;
     },
     editTrip: async function () {
-      const response = await Api.updateTrip(this.trip.id, this.trip);
+      //set trip path
+      this.trip.path=this.geojson;
+      const response = await TripApi.updateTrip(this.trip.id, this.trip);
       this.trip = response.data;
     },
 
@@ -194,10 +186,10 @@ export default {
 
   },
 
-  mounted: function () {
+  mounted: async function () {
     if ('tripID' in this.$route.params && this.$route.params.tripID != null) { //TODO: fix it
       this.editmode = true;
-      //this.loadTrip(this.$route.params.tripID); //TODO: sistemare
+      await this.loadTrip(this.$route.params.tripID); //TODO: sistemare
       this.trip.id = this.$route.params.tripID
     }
 

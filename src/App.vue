@@ -47,9 +47,14 @@ export default {
   methods: {
     
     logout: async function () {
-      //remove all data stored in the local storage before logout
       const response= await Api.logout();
-      console.log(response)
+      console.log(response);
+      if(response.status!=200)
+        alert("Non sono riuscito a fare logout");
+      else{
+        localStorage.setItem('token', null);
+        localStorage.setItem('isAuthenticated',false);
+      }
     }
   },
   mounted: function () {

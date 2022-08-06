@@ -99,29 +99,33 @@
 </style>
 <script>
 // @ is an alias to /src
-
+import UserApi from '@/utilities/user/userApi'
 export default {
   name: 'Login',
   components: {
   },
   data: function () {
     return {
-      a: 1,
-      login_url: "http://localhost:8080/ProgrammazioneWebMattiaBressanEsame/api/user/login",
       username: null,
       password: null
     }
   },
   methods: {
     
-    login: function () {
-      const data_signup = {
+    login: async function () {
+      const credentials = {
         username: this.username,
         password: this.password
       }
-      this.axios.post(this.login_url, data_signup).then((response) => {
-        console.log(response.data)
-      })
+      const response = await UserApi.login(credentials);
+      console.log(response)
+      if(response.status!=200)
+        alert("credenziali sbagliate");
+      else{
+        localStorage.setItem('token', response.data.authorization);
+        localStorage.setItem('isAuthenticated',true);
+        //TODO: go to trips page
+      }  
     }
   },
   mounted: function () {

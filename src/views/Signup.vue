@@ -117,6 +117,7 @@
 </style>
 <script>
 // @ is an alias to /src
+import UserApi from '@/utilities/user/userApi';
 
 export default {
   name: 'Signup',
@@ -124,9 +125,6 @@ export default {
   },
   data: function () {
     return {
-      a: 1,
-      signup_url: "http://localhost:8080/ProgrammazioneWebMattiaBressanEsame/api/user/signup",
-
       firstname: null,
       lastname: null,
       email: null,
@@ -135,17 +133,23 @@ export default {
     }
   },
   methods: {
-    signup: function () {
-      const data_signup = {
+    signup: async function () {
+      const credentials = {
         firstname: this.firstname,
         lastname: this.lastname,
         email: this.email,
         username: this.username,
         password: this.password
       }
-      this.axios.post(this.signup_url, data_signup).then((response) => {
-        console.log(response.data)
-      })
+      const response = await UserApi.register(credentials);
+      console.log(response)
+      if(response.status!=200)
+        alert("Non è stato possibile registrarsi");
+      else{
+        localStorage.setItem('token', response.data.authorization);
+        localStorage.setItem('isAuthenticated',true);
+        //TODO: go to trips page
+      } 
     }
   },
   mounted: function () {

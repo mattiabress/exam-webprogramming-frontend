@@ -5,6 +5,9 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue/dist/bootstrap-vue.esm'
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
+
+Vue.use(require('vue-moment'));
+
 //bootstrap
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin)

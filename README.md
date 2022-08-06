@@ -35,4 +35,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * https://stackoverflow.com/questions/38930066/typeerror-l-control-draw-is-not-a-constructor
 * https://stackoverflow.com/questions/63569682/extracting-coordinates-from-vue2-leaflet-draw-toolbar
 * https://github.com/Leaflet/Leaflet.draw/issues/253
+* https://auth0.com/blog/beginner-vuejs-tutorial-with-user-login/
+* https://www.npmjs.com/package/vue-moment
 
