@@ -41,11 +41,10 @@
         :drawControl="drawControl">
         <l-draw></l-draw>
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-        <l-marker :lat-lng="markerLatLng"></l-marker>
+        <!-- <l-marker :lat-lng="markerLatLng"></l-marker> -->
         <l-feature-group ref="features"></l-feature-group>
         <l-geo-json :geojson="geojson"></l-geo-json>
       </l-map>
-
       <br>
       <br>
         <label for="id">id</label>
@@ -83,7 +82,7 @@
 </template>
 <script>
 // @ is an alias to /src
-import { LMap, LTileLayer, LFeatureGroup, LMarker, LGeoJson } from 'vue2-leaflet';
+import { LMap, LTileLayer, LFeatureGroup, /*LMarker,*/ LGeoJson } from 'vue2-leaflet';
 import TripApi from '@/utilities/trip/tripApi'
 import L from 'leaflet';
 import LDraw from 'leaflet-draw';
@@ -94,7 +93,7 @@ export default {
   components: {
     LMap,
     LTileLayer,
-    LMarker,
+    //LMarker,
     LFeatureGroup,
     LDraw,
     LGeoJson
@@ -108,9 +107,10 @@ export default {
       editmode: false,
       drawControl: true,
       geojson: null,
+      drawnItems:null,
       trip: {
         id: 1,
-        name: "nome",
+        name: "dasads",
         tripDate: null,
         vehicle: null,
         path: {},
@@ -126,17 +126,17 @@ export default {
     },
     addTrip: async function () {
       //set trip path
-      this.trip.path=this.geojson;
+      this.trip.path=this.drawnItems.toGeoJSON();
       const response = await TripApi.createTrip(this.trip);
       this.trip = response.data;
     },
     editTrip: async function () {
       //set trip path
-      this.trip.path=this.geojson;
+      this.trip.path=this.drawnItems.toGeoJSON();
       const response = await TripApi.updateTrip(this.trip.id, this.trip);
       this.trip = response.data;
     },
-
+    
 
     //map methods
     setUpTheMap() {
@@ -144,7 +144,7 @@ export default {
       // FeatureGroup is to store editable layers
       var drawnItems = new L.FeatureGroup();
       map.addLayer(drawnItems);
-
+      this.drawnItems=drawnItems
       var drawControl = new L.Control.Draw({
         draw: {
           polygon: false,
@@ -164,14 +164,21 @@ export default {
       });
 
       //after the drawing is edited, it stores in the localStorage
-      map.on('draw:editstop', function () {
-        localStorage.setItem('geoJson', JSON.stringify(drawnItems.toGeoJSON()));
-      })
-      //after the drawing is finished, it stores in the localStorage
-      map.on('draw:drawstop', function () {
-        localStorage.setItem('geoJson', JSON.stringify(drawnItems.toGeoJSON()));
-      })
+    
+      // map.on('draw:editstop', function () {
+      //   localStorage.setItem('geoJson', JSON.stringify(drawnItems.toGeoJSON()));
+      // })
+      // //after the drawing is finished, it stores in the localStorage
+      
+      // map.on('draw:drawstop', function () {
+      //   localStorage.setItem('geoJson', JSON.stringify(drawnItems.toGeoJSON()));
+      // })
 
+
+      //after the drawing is edited
+       map.on('draw:editstop')
+      //after the drawing is finished
+       map.on('draw:drawstop')
     },
     loadGeoJSON(geoJson) {
       //const response = await fetch("https://rawgit.com/gregoiredavid/france-geojson/master/regions/pays-de-la-loire/communes-pays-de-la-loire.geojson")

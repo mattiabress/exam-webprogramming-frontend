@@ -37,4 +37,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * https://stackoverflow.com/questions/63569682/extracting-coordinates-from-vue2-leaflet-draw-toolbar
 * https://github.com/Leaflet/Leaflet.draw/issues/253
 * https://www.npmjs.com/package/vue-moment
+* https://blog.logrocket.com/building-an-interactive-map-with-vue-and-leaflet/
+* https://leafletjs.com/examples/quick-start/
+https://travishorn.com/interactive-maps-with-vue-leaflet-5430527353c8
 
