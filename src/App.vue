@@ -54,6 +54,7 @@ export default {
       else{
         localStorage.setItem('token', null);
         localStorage.setItem('isAuthenticated',false);
+        // localStorage.clear();
       }
     }
   },

@@ -186,7 +186,8 @@ export default {
 
   },
 
-  mounted: async function () {
+  created: async function () {
+    //const ID = Number(this.$route.params.id);
     if ('tripID' in this.$route.params && this.$route.params.tripID != null) { //TODO: fix it
       this.editmode = true;
       await this.loadTrip(this.$route.params.tripID); //TODO: sistemare
