@@ -46,7 +46,7 @@
       <br />
       <l-map
         ref="myMap"
-        @ready="setUpTheMap()"
+        @ready="setUpTheMap(trip.path)"
         style="height: 500px"
         :zoom="zoom"
         :center="center"
@@ -58,7 +58,7 @@
         <l-feature-group ref="features"></l-feature-group>
         <l-geo-json :geojson="geojson"></l-geo-json>
       </l-map>
-      
+      {{trip.path}}
     </div>
   </div>
 </template>
@@ -124,7 +124,7 @@ export default {
     },
 
     //map methods
-    setUpTheMap() {
+    setUpTheMap(geopath) {
       let map = this.$refs.myMap.mapObject;
       // FeatureGroup is to store editable layers
       var drawnItems = new L.FeatureGroup();
@@ -150,6 +150,7 @@ export default {
           { position: "topleft", collapsed: false }
         )
         .addTo(map);
+
       map.on(L.Draw.Event.CREATED, function (event) {
         var layer = event.layer;
         drawnItems.addLayer(layer);
@@ -158,9 +159,10 @@ export default {
       function onEachFeature(feature, layer) {
         drawnItems.addLayer(layer);
       }
-
-      if (this.trip.path != null) {
-        L.geoJson(this.trip.path, {
+      console.log(geopath);
+      if (geopath != null) {
+        console.log(geopath);
+        L.geoJson(geopath, {
           onEachFeature: onEachFeature,
         });
       }
@@ -168,6 +170,7 @@ export default {
       map.on("draw:editstop");
       //after the drawing is finished
       map.on("draw:drawstop");
+    
     },
 
   },
