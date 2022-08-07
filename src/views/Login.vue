@@ -125,7 +125,7 @@ export default {
         localStorage.setItem('token', response.data.Authorization);
         localStorage.setItem('isAuthenticated',true);
         //TODO: go to trips page
-        router.replace({ path: '/trips' })
+        //router.replace({ path: '/trips' })
       }  
     }
   },

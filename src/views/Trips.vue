@@ -49,11 +49,7 @@ export default {
   },
   data() {
     return {
-      trips: [
-        { id: 1, name: "adda", tripDate: "2022-08-06" },
-        { id: 2, name: "adddsaa", tripDate: "2022-12-10" },
-        { id: 3, name: "a131dda", tripDate: "2022-08-15" },
-      ],
+      trips: null,
       searchDate:null
     };
   },

@@ -134,28 +134,11 @@ export default {
       geojson: {},
       drawnItems: null,
       trip: {
-        id: 1,
+        id: null,
         name: "dasads",
         tripDate: null,
         vehicle: null,
-        path: {
-          type: "FeatureCollection",
-          features: [
-            {
-              type: "Feature",
-              properties: {},
-              geometry: {
-                type: "LineString",
-                coordinates: [
-                  [13.771482, 45.64952],
-                  [13.786202, 45.65027],
-                  [13.786288, 45.64772],
-                  [13.792726, 45.65069],
-                ],
-              },
-            },
-          ],
-        },
+        path: null,
         mainStages: null,
       },
     };
@@ -219,27 +202,12 @@ export default {
           onEachFeature: onEachFeature,
         });
       }
-
       //after the drawing is edited
       map.on("draw:editstop");
       //after the drawing is finished
       map.on("draw:drawstop");
-
-      //after the drawing is edited, it stores in the localStorage
-
-      // map.on('draw:editstop', function () {
-      //   localStorage.setItem('geoJson', JSON.stringify(drawnItems.toGeoJSON()));
-      // })
-      // //after the drawing is finished, it stores in the localStorage
-
-      // map.on('draw:drawstop', function () {
-      //   localStorage.setItem('geoJson', JSON.stringify(drawnItems.toGeoJSON()));
-      // })
     },
-    setPath() {
-      this.trip.path = localStorage.geoJson;
-      this.loadGeoJSON(JSON.parse(this.trip.path));
-    },
+    
   },
 
   created: async function () {

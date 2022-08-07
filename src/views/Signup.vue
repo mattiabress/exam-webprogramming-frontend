@@ -150,7 +150,7 @@ export default {
         localStorage.setItem('isAuthenticated',true);
         
         //TODO: go to trips page
-        router.replace({ path: '/trips' })
+        //router.replace({ path: '/trips' })
       } 
     }
   },
