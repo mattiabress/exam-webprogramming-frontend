@@ -27,13 +27,6 @@
               @click.prevent="addTrip()"
             />
           </div>
-
-          <!-- <div class="col">
-            <input type="button" value="path" @click.prevent="setPath()">
-          </div>
-          <div class="col">
-            <input type="button" value="load" @click.prevent="loadGeoJSON(geoJson)">
-          </div> -->
         </div>
         <div class="row">
           <div class="col">
@@ -65,37 +58,7 @@
         <l-feature-group ref="features"></l-feature-group>
         <l-geo-json :geojson="geojson"></l-geo-json>
       </l-map>
-      <br />
-      <br />
-      <label for="id">id</label>
-      <br />
-      {{ trip.id }}
-      <br />
-      <label for="name">Name</label>
-      <br />
-      {{ trip.name }}
-      <br />
-      <label for="tripDate">tripDate</label>
-      <br />
-      {{ trip.tripDate }}
-      <br />
-      <label for="vehicle">vehicle</label>
-      <br />
-      {{ trip.vehicle }}
-      <br />
-      <label for="path">path</label>
-      <br />
-      {{ trip.path }}
-      <br />
-      <label for="mainStages">mainStages</label>
-      <br />
-      {{ trip.mainStages }}
-      <br />
-      <label for="user">user</label>
-      <br />
-      {{ trip.user }}
-      <br />
-      <br />
+      
     </div>
   </div>
 </template>
@@ -135,11 +98,10 @@ export default {
       drawnItems: null,
       trip: {
         id: null,
-        name: "dasads",
+        name: null,
         tripDate: null,
         vehicle: null,
         path: null,
-        mainStages: null,
       },
     };
   },
@@ -207,7 +169,7 @@ export default {
       //after the drawing is finished
       map.on("draw:drawstop");
     },
-    
+
   },
 
   created: async function () {
