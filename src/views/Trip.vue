@@ -183,8 +183,8 @@ export default {
       await this.loadTrip(Number(this.$route.params.tripID)); //TODO: sistemare
       this.trip.id = Number(this.$route.params.tripID);
       console.log(this.trip.path)
-      this.mapIsReady = true;
-      //this.mapReady=true;
+      //this.mapIsReady = true;
+      this.mapReady=true;
     } else {
       this.editmode = false;
     }
