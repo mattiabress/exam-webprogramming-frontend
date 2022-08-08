@@ -59,7 +59,6 @@
         <l-feature-group ref="features"></l-feature-group>
         <l-geo-json :geojson="geojson"></l-geo-json>
       </l-map>
-      {{trip.path}}
     </div>
   </div>
 </template>
@@ -185,7 +184,7 @@ export default {
       this.trip.id = Number(this.$route.params.tripID);
       console.log(this.trip.path)
       this.mapIsReady = true;
-      this.mapReady=true;
+      //this.mapReady=true;
     } else {
       this.editmode = false;
     }
