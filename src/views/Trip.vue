@@ -19,7 +19,7 @@
               value="Modifica"
               @click.prevent="editTrip()"
             />
-            <!-- TODO: may better with if else -->
+            <!-- TODO: might better with if else -->
             <input
               v-if="!editmode"
               type="button"
@@ -175,12 +175,13 @@ export default {
 
   },
 
-  created: async function () {
+  async beforeMount() { //created: async function ()
     if ("tripID" in this.$route.params && this.$route.params.tripID != null) {
       //TODO: fix it
       this.editmode = true;
       await this.loadTrip(Number(this.$route.params.tripID)); //TODO: sistemare
       this.trip.id = Number(this.$route.params.tripID);
+      console.log(this.trip.path)
     } else {
       this.editmode = false;
     }
