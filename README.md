@@ -43,4 +43,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * https://stackoverflow.com/questions/37362709/how-to-edit-loaded-geojson-with-leaflet
 * https://escuela-tech.medium.com/deploy-vuejs-application-in-tomcat-b0010c2f8395
 * https://github.com/vue-leaflet/vue-leaflet
+* https://bootstrap-vue.org/docs/components/form-input
+* https://mdbootstrap.com/docs/standard/navigation/navbar/
+
 

@@ -1,64 +1,53 @@
 <template>
-  <div class="about">
+  <div class="trip">
     <div class="container">
-      <h2>Viaggio a: {{ trip.name }}</h2>
       <form>
-        <div class="row">
-          <div class="col">
-            <router-link :to="{ name: 'trips' }"
-              ><button type="button" class="btn btn-success">
-                Indietro
-              </button></router-link
-            >
-          </div>
-          <div class="col"></div>
-          <div class="col">
-            <input
-              v-if="editmode"
-              type="button"
-              value="Modifica"
-              @click.prevent="editTrip()"
-            />
-            <!-- TODO: might better with if else -->
-            <input
-              v-if="!editmode"
-              type="button"
-              value="Aggiungi"
-              @click.prevent="addTrip()"
-            />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label for="name">Name</label
-            ><input id="name" type="text" v-model="trip.name" />
-          </div>
-          <div class="col">
-            <label for="tripDate">tripDate</label
-            ><input id="tripDate" type="date" v-model="trip.tripDate" />
-          </div>
-          <div class="col">
-            <label for="vehicle">vehicle</label
-            ><input id="vehicle" type="text" v-model="trip.vehicle" />
-          </div>
-        </div>
+        <b-row class="mt-5">
+          <b-col>
+            <router-link :to="{ name: 'trips' }"><b-button variant="success">
+              <b-icon-arrow-left></b-icon-arrow-left>  Indietro</b-button>
+            </router-link> 
+          </b-col>
+          <b-col><h2>Viaggio a: {{ trip.name }}</h2></b-col>
+          <b-col>
+            <b-button  v-if="editmode" variant="success" @click.prevent="editTrip()" >Modifica</b-button>
+            <b-button  v-if="!editmode" variant="success" @click.prevent="addTrip()" >Aggiungi</b-button>
+          </b-col>
+        </b-row>
+        <b-row class="mt-2">
+          <b-col>
+            <label for="name">Nome:</label>
+          </b-col>
+          <b-col> 
+            <label for="tripDate">Data del viaggio:</label>
+          </b-col>
+          <b-col>
+            <label for="vehicle">Veicolo:</label>
+          </b-col>
+        </b-row>
+        <b-row class="mt-2 mb-4">
+          <b-col>
+            <b-form-input v-model="trip.name" id="name" placeholder="Nome" type="text"></b-form-input>
+          </b-col>
+          <b-col>
+            <b-form-datepicker id="tripDate" :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }" v-model="trip.tripDate" class="mb-2" ></b-form-datepicker>
+          </b-col>
+          <b-col>
+            <b-form-input v-model="trip.vehicle" id="vehicle" placeholder="Veicolo" type="text"></b-form-input>
+          </b-col>
+        </b-row >
       </form>
-      <br />
-      <l-map
-        ref="myMap"
-        @ready="setUpTheMap(trip.path)"
-        style="height: 500px"
-        :zoom="zoom"
-        :center="center"
-        :drawControl="drawControl"
-        v-if="mapReady"
-      >
+      <b-row>
+      <l-map ref="myMap" @ready="setUpTheMap(trip.path)" style="height: 500px" :zoom="zoom" :center="center"
+        :drawControl="drawControl" v-if="mapReady">
         <l-draw></l-draw>
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <!-- <l-marker :lat-lng="markerLatLng"></l-marker> -->
         <l-feature-group ref="features"></l-feature-group>
         <l-geo-json :geojson="geojson"></l-geo-json>
       </l-map>
+      </b-row>
+      
     </div>
   </div>
 </template>
@@ -103,25 +92,66 @@ export default {
         vehicle: null,
         path: null,
       },
-      mapReady:false
+      mapReady: false,
+      docState:"saved",
     };
   },
   methods: {
+    checkInputs: function () {
+      if (this.trip === undefined || this.trip === null) {
+        alert("Error");
+        return false;
+      }
+      if (this.trip.name === undefined || this.trip.name === null || this.trip.name === "") {
+        alert("inserisci il Nome del viaggio");
+        return false;
+      }
+      if (this.trip.tripDate === undefined || this.trip.tripDate === null || this.trip.tripDate === "") {
+        alert("inserisci la data del viaggio");
+        return false;
+      }
+      if (this.trip.vehicle === undefined || this.trip.vehicle === null || this.trip.vehicle === "") {
+        alert("inserisci il veicolo usato");
+        return false;
+      }
+      if (this.trip.path === undefined || this.trip.path === null) {
+        alert("inserisci il percorso");
+        return false;
+      }
+      return true;
+    },
     loadTrip: async function (tripId) {
       const response = await TripApi.getTripByID(tripId);
       if (response.status == 200) this.trip = response.data;
+      else
+        alert("Problema caricamento viaggio");
     },
     addTrip: async function () {
       //set trip path
       this.trip.path = this.drawnItems.toGeoJSON();
-      const response = await TripApi.createTrip(this.trip);
-      this.trip = response.data;
+      if (this.checkInputs()) {
+        const response = await TripApi.createTrip(this.trip);
+        if (response.status == 201) {
+          this.trip = response.data;
+          alert("Viaggio inserito correttamente")
+          this.$router.push({ path: '/trips' })
+        } else
+          alert("Problema nell'inserimento del viaggio")
+      }
+
     },
     editTrip: async function () {
       //set trip path
       this.trip.path = this.drawnItems.toGeoJSON();
       const response = await TripApi.updateTrip(this.trip.id, this.trip);
-      this.trip = response.data;
+      if (this.checkInputs()) {
+        if (response.status == 200) {
+          this.trip = response.data;
+          alert("Viaggio aggiornato correttamente")
+          this.$router.push({ path: '/trips' })
+        } else
+          alert("Problema nell'inserimento del viaggio")
+      }
     },
 
     //map methods
@@ -171,7 +201,7 @@ export default {
       map.on("draw:editstop");
       //after the drawing is finished
       map.on("draw:drawstop");
-    
+
     },
 
   },
@@ -182,13 +212,14 @@ export default {
       this.editmode = true;
       await this.loadTrip(Number(this.$route.params.tripID)); //TODO: sistemare
       this.trip.id = Number(this.$route.params.tripID);
-      console.log(this.trip.path)
+      //console.log(this.trip.path)
       //this.mapIsReady = true;
-      this.mapReady=true;
+      this.mapReady = true;
     } else {
       this.editmode = false;
+      this.mapReady = true;
     }
   },
-  
+
 };
 </script>

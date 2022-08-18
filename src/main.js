@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue/dist/bootstrap-vue.esm';
+import { BootstrapVue, IconsPlugin, NavbarPlugin } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -11,6 +11,7 @@ Vue.use(require('vue-moment'));
 //bootstrap
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin)
+Vue.use(NavbarPlugin)
 //map
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 

@@ -11,7 +11,10 @@
               <span style="color: hsl(218, 81%, 75%)">Ti accompagna in tutti i viaggi</span>
             </h1>
             <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
-              “Un viaggio non inizia nel momento in cui partiamo né finisce nel momento in cui raggiungiamo la meta. I realtà comincia molto prima e non finisce mai, dato che il nastro dei ricordi continua a scorrerci dentro anche dopo che ci siamo fermati. È il virus del viaggio, malattia sostanzialmente incurabile” Ryszard Kapuscinski
+              “Un viaggio non inizia nel momento in cui partiamo né finisce nel momento in cui raggiungiamo la meta. I
+              realtà comincia molto prima e non finisce mai, dato che il nastro dei ricordi continua a scorrerci dentro
+              anche dopo che ci siamo fermati. È il virus del viaggio, malattia sostanzialmente incurabile” Ryszard
+              Kapuscinski
             </p>
           </div>
 
@@ -133,6 +136,37 @@ export default {
     }
   },
   methods: {
+    isValidEmail(email) {
+      let pattern = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
+      if (pattern.test(email)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    checkInputs: function () {
+      if (this.firstname === undefined || this.firstname === null || this.firstname === "") {
+        alert("Inserisci firstname");
+        return false;
+      }
+      if (this.lastname === undefined || this.lastname === null || this.lastname === "") {
+        alert("Inserisci lastname");
+        return false;
+      }
+      if (this.email === undefined || this.email === null || this.email === "" || !this.isValidEmail(this.email)) {
+        alert("Controlla l' email inserita");
+        return false;
+      }
+      if (this.username === undefined || this.username === null || this.username === "") {
+        alert("Inserisci username");
+        return false;
+      }
+      if (this.password === undefined || this.password === null || this.password === "") {
+        alert("Inserisci password");
+        return false;
+      }
+      return true;
+    },
     signup: async function () {
       const credentials = {
         firstname: this.firstname,
@@ -141,17 +175,18 @@ export default {
         username: this.username,
         password: this.password
       }
-      const response = await UserApi.register(credentials);
-      console.log(response)
-      if(response.status!=200)
-        alert("Non è stato possibile registrarsi");
-      else{
-        localStorage.setItem('token', response.data.Authorization);
-        localStorage.setItem('isAuthenticated',true);
-        
-        //TODO: go to trips page
-        //router.replace({ path: '/trips' })
-      } 
+      if (this.checkInputs()) {
+        const response = await UserApi.register(credentials);
+        console.log(response)
+        if (response.status != 200)
+          alert("Non è stato possibile registrarsi");
+        else {
+          localStorage.setItem('token', response.data.Authorization);
+          localStorage.setItem('isAuthenticated', true);
+           this.$router.push({ path: '/trips' })
+        }
+
+      }
     }
   },
   mounted: function () {
