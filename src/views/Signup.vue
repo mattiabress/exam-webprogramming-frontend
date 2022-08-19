@@ -181,6 +181,7 @@ export default {
         if (response.status != 200)
           alert("Non è stato possibile registrarsi");
         else {
+          localStorage.setItem('userinfo',JSON.stringify(response.data.userinfo));
           localStorage.setItem('token', response.data.Authorization);
           localStorage.setItem('isAuthenticated', true);
            this.$router.push({ path: '/trips' })

@@ -187,6 +187,7 @@ export default {
         if (response.status != 200)
           alert("credenziali sbagliate");
         else {
+          localStorage.setItem('userinfo',JSON.stringify(response.data.userinfo));
           localStorage.setItem('token', response.data.Authorization);
           localStorage.setItem('isAuthenticated', true);
           //TODO: go to trips page
