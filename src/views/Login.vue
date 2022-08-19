@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-
+    
     <!-- Section: Design Block -->
     <section class="background-radial-gradient overflow-hidden">
       <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
@@ -60,6 +60,7 @@
 
 
 <style scoped>
+/*
 .background-radial-gradient {
   background-color: hsl(218, 41%, 15%);
   background-image: radial-gradient(650px circle at 0% 0%,
@@ -74,7 +75,7 @@
       hsl(218, 41%, 20%) 75%,
       hsl(218, 41%, 19%) 80%,
       transparent 100%);
-}
+
 
 #radius-shape-1 {
   height: 220px;
@@ -95,6 +96,56 @@
   overflow: hidden;
 }
 
+.bg-glass {
+  background-color: hsla(0, 0%, 100%, 0.9) !important;
+  backdrop-filter: saturate(200%) blur(25px);
+}
+}*/
+
+.background-radial-gradient {
+  background-color: #00AEAD;
+  background-image: radial-gradient(650px circle at 0% 0%,
+      #00BDBD 15%,
+      #01A391 35%,
+      #017F66 75%,
+      #017F66 80%,
+      transparent 100%),
+    radial-gradient(1250px circle at 100% 100%,
+      #00BDBD 15%,
+      #01A391 35%,
+      #017F66 75%,
+      #017F66 80%,
+      transparent 100%);
+}
+
+#radius-shape-1 {
+  height: 220px;
+  width: 220px;
+  top: -60px;
+  left: -130px;
+  background: radial-gradient(#00AEAD,#1AFFFF);
+  overflow: hidden;
+}
+
+#radius-shape-2 {
+  border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+  bottom: -60px;
+  right: -110px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(#BFD834,#1AFFFF);
+  overflow: hidden;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #019875;
+    border-color: #019875;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #0198758f;
+    border-color: #019875;
+}
 .bg-glass {
   background-color: hsla(0, 0%, 100%, 0.9) !important;
   backdrop-filter: saturate(200%) blur(25px);

@@ -7,6 +7,7 @@ import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import Trip from '../views/Trip.vue'
 import Trips from '../views/Trips.vue'
+import Profile from '../views/Profile.vue'
 
 
 import { authGuard } from '../auth/AuthGuard';
@@ -21,6 +22,12 @@ const routes = [
     component: Trips,
     beforeEnter: authGuard,
     meta: { transition: 'fade' },
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
+    beforeEnter: authGuard,
   },
   {
     path: '/signup',

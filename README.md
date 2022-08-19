@@ -46,4 +46,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * https://bootstrap-vue.org/docs/components/form-input
 * https://mdbootstrap.com/docs/standard/navigation/navbar/
 
+Palete:
+https://colors.dopely.top/palettes/lc2aTTRWV0l
+
 

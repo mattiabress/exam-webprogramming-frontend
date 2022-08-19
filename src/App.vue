@@ -1,36 +1,7 @@
 <template>
 
   <div id="app">
-    <Navbar v-if="this.$route.name != 'login' && this.$route.name !='signup' "></Navbar>
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/signup">Signup</router-link>|
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/trips">Trips</router-link> |
-      <input type="button" value="Logout" @click.prevent="logout()">
-    </div> -->
-    <!-- <div>
-      <b-navbar toggleable="lg" type="dark" variant="success">
-        <b-navbar-brand href="#" :to="{ path: '/' }">Home</b-navbar-brand>
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-        <b-collapse id="nav-collapse" is-nav>
-          
-          <b-navbar-nav class="ml-auto">
-            <b-nav-item-dropdown v-if="isAuthenticated" right>
-             
-              <template #button-content>
-                User
-              </template>
-              <b-dropdown-item :to="{ path: '/signup' }">Profile</b-dropdown-item>
-              <b-dropdown-item @click.prevent="logout()">Sign Out</b-dropdown-item>
-            </b-nav-item-dropdown>
-          </b-navbar-nav>
-        </b-collapse>
-      </b-navbar>
-    </div> -->
-
-    <!-- <router-view /> -->
-
+    <Navbar v-if="this.$route.name != 'login' && this.$route.name != 'signup'"></Navbar>
     <router-view v-slot="{ Component }">
       <transition name="fade">
         <component :is="Component" />
@@ -60,6 +31,35 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+div {
+  color: #00AEAD;
+  font-family: cursive; /* controllare com'è */
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #019875 !important;
+  /* TODO: sistemare */
+  border-color: #019875 !important;
+}
+
+.table {
+  color: #006060;
+}
+
+.table th,
+.table td {
+  font-style: normal;
+  font-family: Verdana !important;
+}
+/* Titolo navbar */
+.ml-3, .mx-3 {
+    font-size: 35px;
+}
+.navbar .navbar-brand {
+  padding-top: 2px ;
 }
 </style>
 <script>
