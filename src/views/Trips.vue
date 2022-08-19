@@ -1,59 +1,61 @@
 <template>
-  <div class="trips">
-    <div class="container">
-      <b-row class="mt-5">
-        <b-col> <h2>I miei viaggi</h2> </b-col>
-       
-      </b-row>
-      <b-row align-v="top">
-        <b-col>Filtra Per data: </b-col>
-        <b-col>
-          <b-form-datepicker :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-            v-model="searchStartDate" class="mb-2" @input="getAllTripsByDate()"></b-form-datepicker>
-        </b-col>
-        <b-col>
-          <b-form-datepicker :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-            v-model="searchEndDate" class="mb-2" @input="getAllTripsByDate()"></b-form-datepicker>
-        </b-col>
-        <b-col><button type="button" class="btn btn-success" @click="loadTrip()">
-            <b-icon-arrow-repeat ></b-icon-arrow-repeat>
-          </button></b-col>
-        <b-col>
-          <router-link :to="{ name: 'trip' }"><button type="button" class="btn btn-success">Inserisci</button>
-          </router-link>
-        </b-col>
-      </b-row>
+    <div class="trips">
+        <div class="container">
+            <b-row class="mt-5">
+                <b-col>
+                    <h2>I miei viaggi</h2>
+                </b-col>
+
+            </b-row>
+            <b-row align-v="top">
+                <b-col>Filtra Per data: </b-col>
+                <b-col>
+                    <b-form-datepicker :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                        v-model="searchStartDate" class="mb-2" @input="getAllTripsByDate()"></b-form-datepicker>
+                </b-col>
+                <b-col>
+                    <b-form-datepicker :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                        v-model="searchEndDate" class="mb-2" @input="getAllTripsByDate()"></b-form-datepicker>
+                </b-col>
+                <b-col><button type="button" class="btn btn-success" @click="loadTrip()">
+                        <b-icon-arrow-repeat></b-icon-arrow-repeat>
+                    </button></b-col>
+                <b-col>
+                    <router-link :to="{ name: 'trip' }"><button type="button" class="btn btn-success">Inserisci</button>
+                    </router-link>
+                </b-col>
+            </b-row>
 
 
-      <b-table hover :items="trips" :fields="fields" :busy="isBusy" class="mt-3" label-sort-asc="" label-sort-desc=""
-        label-sort-clear="">
-        <template #table-busy>
-          <div class="text-center text-danger my-2">
-            <b-spinner class="align-middle"></b-spinner>
-            <strong>Loading...</strong>
-          </div>
-        </template>
-        <template #cell(id)="data">
-          <router-link :to="{ name: 'trip', params: { tripID: data.value } }">
-          <button type="button" class="btn btn-success" >
-            <b-icon-pencil-square></b-icon-pencil-square>
-          </button>
-          </router-link>
-        </template>
-        <!-- A custom formatted column -->
-        <template #cell(tripDate)="data">
-          {{ data.value | moment("DD/MM/YYYY") }}
-        </template>
+            <b-table hover :items="trips" :fields="fields" :busy="isBusy" class="mt-3" label-sort-asc=""
+                label-sort-desc="" label-sort-clear="">
+                <template #table-busy>
+                    <div class="text-center text-danger my-2">
+                        <b-spinner class="align-middle"></b-spinner>
+                        <strong>Loading...</strong>
+                    </div>
+                </template>
+                <template #cell(id)="data">
+                    <router-link :to="{ name: 'trip', params: { tripID: data.value } }">
+                        <button type="button" class="btn btn-success">
+                            <b-icon-pencil-square></b-icon-pencil-square>
+                        </button>
+                    </router-link>
+                </template>
+                <!-- A custom formatted column -->
+                <template #cell(tripDate)="data">
+                    {{ data.value | moment("DD/MM/YYYY") }}
+                </template>
 
-        <!-- A virtual composite column -->
-        <template #cell(elimina)="data">
-          <button type="button" class="btn btn-danger" v-on:click="deleteTrip(data.item.id)">
-            <b-icon-trash></b-icon-trash>
-          </button>
-        </template>
+                <!-- A virtual composite column -->
+                <template #cell(elimina)="data">
+                    <button type="button" class="btn btn-danger" v-on:click="deleteTrip(data.item.id)">
+                        <b-icon-trash></b-icon-trash>
+                    </button>
+                </template>
 
-      </b-table>
-      <!-- <table class="table">
+            </b-table>
+            <!-- <table class="table">
         <thead>
           <tr>
             <th scope="col">ID</th>
@@ -80,8 +82,8 @@
           </tr>
         </tbody>
       </table> -->
+        </div>
     </div>
-  </div>
 
 </template>
 
@@ -90,7 +92,6 @@
 .table {
     color: #006060;
 }
-
 </style>
 
 
@@ -99,79 +100,114 @@
 import TripApi from '@/utilities/trip/tripApi'
 //color:#5cb874
 export default {
-  name: 'Trips',
-  components: {
-  },
-  data() {
-    return {
-      isLoaded: false,
-      fields: [
-        // A virtual column that doesn't exist in items
-        {
-          key: 'id',
-          label: 'ID',
-        },
-        {
-          key: 'name',
-          label: 'Nome viaggio',
-          sortable: true
-        },
-        {
-          key: 'tripDate',
-          label: 'Data viaggio',
-          sortable: true
-        },
-        {
-          key: 'vehicle',
-          label: 'Mezzo',
-          sortable: true,
-        },
-        {
-          key: 'elimina',
-          label: 'Elimina',
-        },
-      ],
-      trips: null,
-      searchStartDate: null,
-      searchEndDate: null
-    };
-  },
-  methods: {
-    loadTrip: async function () {
-      this.isLoaded = false
-      const response = await TripApi.getAllTrips();
-      console.log(response)
-      if (response.status == 200) {
-        this.trips = response.data;
-        this.isLoaded = true;
-      }
+    name: 'Trips',
+    components: {
+    },
+    data() {
+        return {
+            isLoaded: false,
+            fields: [
+                // A virtual column that doesn't exist in items
+                {
+                    key: 'id',
+                    label: 'ID',
+                },
+                {
+                    key: 'name',
+                    label: 'Nome viaggio',
+                    sortable: true
+                },
+                {
+                    key: 'tripDate',
+                    label: 'Data viaggio',
+                    sortable: true
+                },
+                {
+                    key: 'vehicle',
+                    label: 'Mezzo',
+                    sortable: true,
+                },
+                {
+                    key: 'elimina',
+                    label: 'Elimina',
+                },
+            ],
+            trips: null,
+            searchStartDate: null,
+            searchEndDate: null
+        };
+    },
+    methods: {
+        loadTrip: async function () {
+            this.isLoaded = false
+            try {
+                const response = await TripApi.getAllTrips();
+                if (response.status == 200) {
+                    this.trips = response.data;
+                    this.isLoaded = true;
+                }
+            } catch (error) {
+                const e = error.toJSON()
+                if (e.status == 401) {
+                    alert(e.message)
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('isAuthenticated');
+                    localStorage.removeItem('userinfo');
+                    this.$router.push({ path: '/login' })
+                } else
+                    alert("Problema caricamento")
+            }
 
-    },
-    deleteTrip: async function (tripId) {
-      if (confirm("Vuoi veramente cancellare il viaggio?")) {
-        const response = await TripApi.deleteTrip(tripId);
-        if (response.status == 200) {
-          alert("Viaggio cancellato");
-          await this.loadTrip();
-        } else {
-          alert("Non posso cancellare il viaggio");
-        }
-      }
-    },
-    getAllTripsByDate: async function () {
-      if (this.searchEndDate < this.searchStartDate)
-        return alert("Data di fine non può essere maggiore di inzio");
-      this.isLoaded = false
-      const response = await TripApi.getAllTripsByDate(this.searchStartDate, this.searchEndDate);
-      if (response.status == 200) {
-        this.trips = response.data;
-        this.isLoaded = true;
-      }
-    },
-  },
-  mounted: async function () {
+        },
+        deleteTrip: async function (tripId) {
+            if (confirm("Vuoi veramente cancellare il viaggio?")) {
+                try {
+                    const response = await TripApi.deleteTrip(tripId);
+                    if (response.status == 200) {
+                        alert("Viaggio cancellato");
+                        await this.loadTrip();
+                    } 
+                } catch (error) {
+                    const e = error.toJSON()
+                    if (e.status == 401) {
+                        alert(e.message)
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('isAuthenticated');
+                        localStorage.removeItem('userinfo');
+                        this.$router.push({ path: '/login' })
+                    } else
+                        alert("Non posso cancellare il viaggio")
+                }
 
-    await this.loadTrip();
-  }
+
+            }
+        },
+        getAllTripsByDate: async function () {
+            if (this.searchEndDate < this.searchStartDate)
+                return alert("Data di fine non può essere maggiore di inzio");
+            this.isLoaded = false
+            try {
+                const response = await TripApi.getAllTripsByDate(this.searchStartDate, this.searchEndDate);
+                if (response.status == 200) {
+                    this.trips = response.data;
+                    this.isLoaded = true;
+                }
+            } catch (error) {
+                const e = error.toJSON()
+                if (e.status == 401) {
+                    alert(e.message)
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('isAuthenticated');
+                    localStorage.removeItem('userinfo');
+                    this.$router.push({ path: '/login' })
+                } else
+                    alert("Problema caricamento")
+            }
+        },
+    },
+    mounted: async function () {
+
+        await this.loadTrip();
+    }
 }
 </script>

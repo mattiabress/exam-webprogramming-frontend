@@ -9,10 +9,16 @@ export default {
     return Api().get(base_route_route + "/" + tripId)
   },
   getAllTripsByDate(startdate, enddate) {
-    if (startdate === null || startdate === undefined || startdate === "")
-      return Api().get(base_route_route + "?enddate=" + enddate)
+    let isStartDateNull = startdate === null || startdate === undefined || startdate === "";
+    let isEndDateNull = enddate === null || enddate === undefined || enddate === "";
+    if (!isStartDateNull && !isEndDateNull)
+      return Api().get(base_route_route + "?startdate=" + startdate + "&enddate=" + enddate);
+    else if (isStartDateNull)
+      return Api().get(base_route_route + "?enddate=" + enddate);
+    else if (isEndDateNull)
+      return Api().get(base_route_route + "?startdate=" + startdate);
     else
-      return Api().get(base_route_route + "?startdate=" + startdate + "&enddate=" + enddate)
+      ;
   },
   createTrip(trip) {
     return Api().post(base_route_route, trip)

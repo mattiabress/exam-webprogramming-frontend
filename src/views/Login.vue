@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    
+
     <!-- Section: Design Block -->
     <section class="background-radial-gradient overflow-hidden">
       <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
@@ -123,7 +123,7 @@
   width: 220px;
   top: -60px;
   left: -130px;
-  background: radial-gradient(#00AEAD,#1AFFFF);
+  background: radial-gradient(#00AEAD, #1AFFFF);
   overflow: hidden;
 }
 
@@ -133,19 +133,22 @@
   right: -110px;
   width: 300px;
   height: 300px;
-  background: radial-gradient(#BFD834,#1AFFFF);
+  background: radial-gradient(#BFD834, #1AFFFF);
   overflow: hidden;
 }
+
 .btn-primary {
-    color: #fff;
-    background-color: #019875;
-    border-color: #019875;
+  color: #fff;
+  background-color: #019875;
+  border-color: #019875;
 }
+
 .btn-primary:hover {
-    color: #fff;
-    background-color: #0198758f;
-    border-color: #019875;
+  color: #fff;
+  background-color: #0198758f;
+  border-color: #019875;
 }
+
 .bg-glass {
   background-color: hsla(0, 0%, 100%, 0.9) !important;
   backdrop-filter: saturate(200%) blur(25px);
@@ -176,24 +179,37 @@ export default {
       }
       return true;
     },
+
+
     login: async function () {
       const credentials = {
         username: this.username,
         password: this.password
       }
       if (this.checkInputs()) {
-        const response = await UserApi.login(credentials);
-        console.log(response)
-        if (response.status != 200)
-          alert("credenziali sbagliate");
-        else {
-          localStorage.setItem('userinfo',JSON.stringify(response.data.userinfo));
-          localStorage.setItem('token', response.data.Authorization);
-          localStorage.setItem('isAuthenticated', true);
-          //TODO: go to trips page
-          //router.replace({ path: '/trips' })
-          this.$router.push({ path: '/trips' })
+        try {
+          const response = await UserApi.login(credentials);
+          console.log(response)
+          if (response.status == 200) {
+            localStorage.setItem('userinfo', JSON.stringify(response.data.userinfo));
+            localStorage.setItem('token', response.data.Authorization);
+            localStorage.setItem('isAuthenticated', true);
+            //TODO: go to trips page
+            //router.replace({ path: '/trips' })
+            this.$router.push({ path: '/trips' })
+          }
+        } catch (error) {
+          const e = error.toJSON()
+          if (e.status == 401) {
+            alert("credenziali sbagliate")
+          } else if (e.status == 404) {
+            alert("Utente non trovato")
+          } else
+            alert("Problema nel login")
         }
+
+
+
       }
 
     }

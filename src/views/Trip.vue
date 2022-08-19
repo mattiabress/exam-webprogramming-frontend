@@ -4,21 +4,25 @@
       <form>
         <b-row class="mt-5">
           <b-col>
-            <router-link :to="{ name: 'trips' }"><b-button variant="success">
-              <b-icon-arrow-left></b-icon-arrow-left>  Indietro</b-button>
-            </router-link> 
+            <router-link :to="{ name: 'trips' }">
+              <b-button variant="success">
+                <b-icon-arrow-left></b-icon-arrow-left> Indietro
+              </b-button>
+            </router-link>
           </b-col>
-          <b-col><h2>Viaggio a: {{ trip.name }}</h2></b-col>
           <b-col>
-            <b-button  v-if="editmode" variant="success" @click.prevent="editTrip()" >Modifica</b-button>
-            <b-button  v-if="!editmode" variant="success" @click.prevent="addTrip()" >Aggiungi</b-button>
+            <h2>Viaggio a: {{ trip.name }}</h2>
+          </b-col>
+          <b-col>
+            <b-button v-if="editmode" variant="success" @click.prevent="editTrip()">Modifica</b-button>
+            <b-button v-if="!editmode" variant="success" @click.prevent="addTrip()">Aggiungi</b-button>
           </b-col>
         </b-row>
         <b-row class="mt-2">
           <b-col>
             <label for="name">Nome:</label>
           </b-col>
-          <b-col> 
+          <b-col>
             <label for="tripDate">Data del viaggio:</label>
           </b-col>
           <b-col>
@@ -30,24 +34,26 @@
             <b-form-input v-model="trip.name" id="name" placeholder="Nome" type="text"></b-form-input>
           </b-col>
           <b-col>
-            <b-form-datepicker id="tripDate" :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }" v-model="trip.tripDate" class="mb-2" ></b-form-datepicker>
+            <b-form-datepicker id="tripDate"
+              :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }" v-model="trip.tripDate"
+              class="mb-2"></b-form-datepicker>
           </b-col>
           <b-col>
             <b-form-input v-model="trip.vehicle" id="vehicle" placeholder="Veicolo" type="text"></b-form-input>
           </b-col>
-        </b-row >
+        </b-row>
       </form>
       <b-row>
-      <l-map ref="myMap" @ready="setUpTheMap(trip.path)" style="height: 500px" :zoom="zoom" :center="center"
-        :drawControl="drawControl" v-if="mapReady">
-        <l-draw></l-draw>
-        <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-        <!-- <l-marker :lat-lng="markerLatLng"></l-marker> -->
-        <l-feature-group ref="features"></l-feature-group>
-        <l-geo-json :geojson="geojson"></l-geo-json>
-      </l-map>
+        <l-map ref="myMap" @ready="setUpTheMap(trip.path)" style="height: 500px" :zoom="zoom" :center="center"
+          :drawControl="drawControl" v-if="mapReady">
+          <l-draw></l-draw>
+          <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+          <!-- <l-marker :lat-lng="markerLatLng"></l-marker> -->
+          <l-feature-group ref="features"></l-feature-group>
+          <l-geo-json :geojson="geojson"></l-geo-json>
+        </l-map>
       </b-row>
-      
+
     </div>
   </div>
 </template>
@@ -93,7 +99,7 @@ export default {
         path: null,
       },
       mapReady: false,
-      docState:"saved",
+      docState: "saved",
     };
   },
   methods: {
@@ -121,34 +127,74 @@ export default {
       return true;
     },
     loadTrip: async function (tripId) {
-      const response = await TripApi.getTripByID(tripId);
-      if (response.status == 200) this.trip = response.data;
-      else
-        alert("Problema caricamento viaggio");
+      try {
+        const response = await TripApi.getTripByID(tripId);
+        if (response.status == 200) this.trip = response.data;
+        else
+          alert("Problema caricamento viaggio");
+      } catch (error) {
+        const e = error.toJSON()
+        if (e.status == 401) {
+          alert(e.message)
+          localStorage.removeItem('token');
+          localStorage.removeItem('isAuthenticated');
+          localStorage.removeItem('userinfo');
+          this.$router.push({ path: '/login' })
+        } else
+          alert("Problema nell'inserimento del viaggio")
+      }
+
+
     },
     addTrip: async function () {
       //set trip path
       this.trip.path = this.drawnItems.toGeoJSON();
       if (this.checkInputs()) {
-        const response = await TripApi.createTrip(this.trip);
-        if (response.status == 201) {
-          this.trip = response.data;
-          alert("Viaggio inserito correttamente")
-          this.$router.push({ path: '/trips' })
-        } else
-          alert("Problema nell'inserimento del viaggio")
+        try {
+          const response = await TripApi.createTrip(this.trip).catch(this.handleAxiosError);
+          if (response.status == 201) {
+            this.trip = response.data;
+            alert("Viaggio inserito correttamente")
+            this.$router.push({ path: '/trips' })
+          } else
+            alert("Problema nell'inserimento del viaggio")
+        } catch (error) {
+          const e = error.toJSON()
+          if (e.status == 401) {
+            alert(e.message)
+            localStorage.removeItem('token');
+            localStorage.removeItem('isAuthenticated');
+            localStorage.removeItem('userinfo');
+            this.$router.push({ path: '/login' })
+          } else
+            alert("Problema nell'inserimento del viaggio")
+
+        }
+
       }
 
     },
     editTrip: async function () {
       //set trip path
       this.trip.path = this.drawnItems.toGeoJSON();
-      const response = await TripApi.updateTrip(this.trip.id, this.trip);
-      if (this.checkInputs()) {
-        if (response.status == 200) {
-          this.trip = response.data;
-          alert("Viaggio aggiornato correttamente")
-          this.$router.push({ path: '/trips' })
+      try {
+        const response = await TripApi.updateTrip(this.trip.id, this.trip);
+        if (this.checkInputs()) {
+          if (response.status == 200) {
+            this.trip = response.data;
+            alert("Viaggio aggiornato correttamente")
+            this.$router.push({ path: '/trips' })
+          } else
+            alert("Problema nell'inserimento del viaggio")
+        }
+      } catch (error) {
+        const e = error.toJSON()
+        if (e.status == 401) {
+          alert(e.message)
+          localStorage.removeItem('token');
+          localStorage.removeItem('isAuthenticated');
+          localStorage.removeItem('userinfo');
+          this.$router.push({ path: '/login' })
         } else
           alert("Problema nell'inserimento del viaggio")
       }
@@ -205,7 +251,6 @@ export default {
     },
 
   },
-
   async beforeMount() { //created: async function ()
     if ("tripID" in this.$route.params && this.$route.params.tripID != null) {
       //TODO: fix it

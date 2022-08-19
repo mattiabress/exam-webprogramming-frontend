@@ -45,6 +45,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * https://github.com/vue-leaflet/vue-leaflet
 * https://bootstrap-vue.org/docs/components/form-input
 * https://mdbootstrap.com/docs/standard/navigation/navbar/
+* https://javascript.plainenglish.io/handle-refresh-token-with-axios-1e0f45e9afa
 
 Palete:
 https://colors.dopely.top/palettes/lc2aTTRWV0l

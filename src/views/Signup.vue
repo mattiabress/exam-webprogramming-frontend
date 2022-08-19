@@ -176,16 +176,28 @@ export default {
         password: this.password
       }
       if (this.checkInputs()) {
-        const response = await UserApi.register(credentials);
-        console.log(response)
-        if (response.status != 200)
-          alert("Non è stato possibile registrarsi");
-        else {
-          localStorage.setItem('userinfo',JSON.stringify(response.data.userinfo));
-          localStorage.setItem('token', response.data.Authorization);
-          localStorage.setItem('isAuthenticated', true);
-           this.$router.push({ path: '/trips' })
+        try {
+          const response = await UserApi.register(credentials);
+          console.log(response)
+          if (response.status == 200) {
+            localStorage.setItem('userinfo', JSON.stringify(response.data.userinfo));
+            localStorage.setItem('token', response.data.Authorization);
+            localStorage.setItem('isAuthenticated', true);
+            this.$router.push({ path: '/trips' })
+          }
+        } catch (error) {
+          const e = error.toJSON()
+          if (e.status == 401) {
+            alert("credenziali sbagliate")
+          } else if (e.status == 404) {
+            alert("Utente non trovato")
+          } else if (e.status == 409) {
+            alert("Username già presente")
+          } else
+            alert("Problema nel signup")
         }
+
+
 
       }
     }

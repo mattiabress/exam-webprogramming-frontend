@@ -84,11 +84,16 @@ export default {
       if (response.status != 200)
         alert("Non sono riuscito a fare logout");
       else {
-        localStorage.setItem('token', null);
-        localStorage.setItem('isAuthenticated', false);
-        this.isAuthenticated = false;
-        // localStorage.clear();
+        localStorage.removeItem('token');
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('userinfo');
         this.$router.push({ path: '/login' })
+      //  localStorage.setItem('token', null);
+      //   localStorage.setItem('isAuthenticated', false);
+      //   localStorage.setItem('userinfo', null);
+      //   this.isAuthenticated = false;
+        // localStorage.clear();
+        // this.$router.push({ path: '/login' })
       }
     }
   },
