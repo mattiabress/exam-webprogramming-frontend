@@ -149,13 +149,13 @@ export default {
             } catch (error) {
                 const e = error.toJSON()
                 if (e.status == 401) {
-                    alert(e.message)
+                    alert("Token scaduto")
                     localStorage.removeItem('token');
                     localStorage.removeItem('isAuthenticated');
                     localStorage.removeItem('userinfo');
                     this.$router.push({ path: '/login' })
                 } else
-                    alert("Problema caricamento")
+                    alert(e.message)
             }
 
         },
@@ -166,17 +166,21 @@ export default {
                     if (response.status == 200) {
                         alert("Viaggio cancellato");
                         await this.loadTrip();
-                    } 
+                    }
                 } catch (error) {
                     const e = error.toJSON()
                     if (e.status == 401) {
-                        alert(e.message)
+                        alert("Token scaduto")
                         localStorage.removeItem('token');
                         localStorage.removeItem('isAuthenticated');
                         localStorage.removeItem('userinfo');
                         this.$router.push({ path: '/login' })
+                    } else if (e.status == 409) {
+                        alert("Non riuscito a cancellare")
+                    } else if (e.status == 404) {
+                        alert("Non trovato")
                     } else
-                        alert("Non posso cancellare il viaggio")
+                        alert(e.message)
                 }
 
 
@@ -195,13 +199,13 @@ export default {
             } catch (error) {
                 const e = error.toJSON()
                 if (e.status == 401) {
-                    alert(e.message)
+                    alert("Token scaduto")
                     localStorage.removeItem('token');
                     localStorage.removeItem('isAuthenticated');
                     localStorage.removeItem('userinfo');
                     this.$router.push({ path: '/login' })
                 } else
-                    alert("Problema caricamento")
+                    alert(e.message)
             }
         },
     },

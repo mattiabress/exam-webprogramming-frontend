@@ -1,7 +1,7 @@
 <template>
   <div class="mynavbar">
     <b-navbar toggleable="lg" type="dark" variant="success">
-      <b-navbar-brand  :to="{ path: '/' }" class="" >
+      <b-navbar-brand :to="{ path: '/' }" class="">
         <img src="@/assets/logo.png" class="d-inline-block align-center img-fluid logo-img" alt="airplane_trip">
         <em class="ml-3">Viaggio diario</em>
       </b-navbar-brand>
@@ -14,12 +14,12 @@
             <!-- Using 'button-content' slot -->
             <template #button-content class="align-center">
               <b-icon-person-circle class="mr-3" font-scale="1.5"></b-icon-person-circle>
-              <em>{{userinfo.name}}</em>
+              <em>{{ userinfo.firstname }}</em>
               <b-icon icon="airplane" aria-hidden="true"></b-icon>
             </template>
 
             <b-dropdown-item :to="{ path: '/profile' }">
-            <b-button variant="outline-info" class="mb-2">
+              <b-button variant="outline-info" class="mb-2">
                 <b-icon icon="person-fill" aria-hidden="true"></b-icon> Profile
               </b-button>
             </b-dropdown-item>
@@ -47,31 +47,42 @@ export default {
   data: function () {
     return {
       isAuthenticated: false,
-      userinfo:{
-        name:"Mattia",
-        lastname:"Bressan"
+      userinfo: {
+        name: "Mattia",
+        lastname: "Bressan"
       }
     }
   },
   methods: {
 
     logout: async function () {
-      const response = await Api.logout();
-      console.log(response);
-      if (response.status != 200)
-        alert("Non sono riuscito a fare logout");
-      else {
-        localStorage.setItem('token', null);
-        localStorage.setItem('isAuthenticated', false);
-        this.isAuthenticated = false;
-        // localStorage.clear();
-        this.$router.push({ path: '/login' })
+      try {
+        const response = await Api.logout();
+        if (response.status == 200) {
+          localStorage.setItem('token', null);
+          localStorage.setItem('isAuthenticated', false);
+          this.isAuthenticated = false;
+          // localStorage.clear();
+          this.$router.push({ path: '/login' })
+        }
+      } catch (error) {
+        const e = error.toJSON()
+        if (e.status == 401) {
+          alert("Non autorizzato")
+        } else if (e.status == 404) {
+          alert("Utente non trovato")
+        } else if (e.status == 409) {
+          alert("Username già presente")
+        } else
+          alert(e.message)
       }
+
     }
   },
   mounted: function () {
     this.isAuthenticated = localStorage.getItem('isAuthenticated') === "true";
-   //this.userinfo = JSON.parse(localStorage.getItem('userinfo'));
+    this.userinfo = JSON.parse(JSON.parse(localStorage.getItem('userinfo')));
+    //this.userinfo = JSON.parse(localStorage.getItem('userinfo'));
   }
 }
 </script>
@@ -95,11 +106,12 @@ li {
 a {
   color: #42b983;
 }
-b-navbar-brand :hover{
+
+b-navbar-brand :hover {
   display: inline-block;
 }
 
-.logo-img{
-  height:55px
+.logo-img {
+  height: 55px
 }
 </style>

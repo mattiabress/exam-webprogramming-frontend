@@ -2,15 +2,15 @@
   <div class="login">
 
     <!-- Section: Design Block -->
-    <section class="background-radial-gradient overflow-hidden">
+    <section class="background-radial-gradient overflow-hidden vh-100">
       <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
         <div class="row gx-lg-5 align-items-center mb-5">
           <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
             <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
               Il tuo diario dei viaggi <br />
-              <span style="color: hsl(218, 81%, 75%)">Ti accompagna in tutti i viaggi</span>
+              <span style="color: #00AEAD">Ti accompagna in tutti i viaggi</span>
             </h1>
-            <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+            <p class="mb-4" style="color: #BFD834">
               “Un viaggio non inizia nel momento in cui partiamo né finisce nel momento in cui raggiungiamo la meta. I
               realtà comincia molto prima e non finisce mai, dato che il nastro dei ricordi continua a scorrerci dentro
               anche dopo che ci siamo fermati. È il virus del viaggio, malattia sostanzialmente incurabile” Ryszard
@@ -103,14 +103,14 @@
 }*/
 
 .background-radial-gradient {
-  background-color: #00AEAD;
-  background-image: radial-gradient(650px circle at 0% 0%,
+  background-color: #BFD834;
+  background-image: radial-gradient(500px circle at 0% 0%,
       #00BDBD 15%,
       #01A391 35%,
       #017F66 75%,
       #017F66 80%,
       transparent 100%),
-    radial-gradient(1250px circle at 100% 100%,
+    radial-gradient(1350px circle at 100% 100%,
       #00BDBD 15%,
       #01A391 35%,
       #017F66 75%,
@@ -123,7 +123,7 @@
   width: 220px;
   top: -60px;
   left: -130px;
-  background: radial-gradient(#00AEAD, #1AFFFF);
+  background: radial-gradient(#00AEAD, #00EBEB);
   overflow: hidden;
 }
 

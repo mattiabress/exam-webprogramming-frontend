@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <div class="container">
-      <b-form @submit="onSubmit" @reset="onReset">
+      <b-form>
         <b-row class="mt-5">
           <b-col>
             <router-link :to="{ name: 'trips' }">
@@ -14,8 +14,6 @@
             <h2>Profilo</h2>
           </b-col>
           <b-col>
-            <b-button v-if="editmode" variant="success" @click.prevent="editTrip()">Modifica</b-button>
-            <b-button v-if="!editmode" variant="success" @click.prevent="addTrip()">Aggiungi</b-button>
           </b-col>
         </b-row>
 
@@ -27,7 +25,8 @@
           </b-col>
           <b-col>
             <b-form-group id="input-group-2" label="Cognome:" label-for="input-2">
-              <b-form-input id="input-2" v-model="form.lastname" placeholder="Inserisci cognome" required></b-form-input>
+              <b-form-input id="input-2" v-model="form.lastname" placeholder="Inserisci cognome" required>
+              </b-form-input>
             </b-form-group>
           </b-col>
         </b-row>
@@ -48,7 +47,8 @@
         <b-row class="mt-2">
           <b-col>
             <b-form-group id="input-group-1" label="Old password" label-for="input-1">
-              <b-form-input id="input-1" v-model="form.oldpassword" type="password" placeholder="Vecchia password" required>
+              <b-form-input id="input-1" v-model="form.oldpassword" type="password" placeholder="Vecchia password"
+                required>
               </b-form-input>
             </b-form-group>
           </b-col>
@@ -68,7 +68,7 @@
             </b-form-group>
           </b-col>
           <b-col>
-            
+
           </b-col>
         </b-row>
 
@@ -91,24 +91,22 @@ export default {
         lastname: "lastname",
         email: "email",
         username: "username",
-        oldpassword:null,
+        oldpassword: null,
         password: null,
-        role:"admin"
+        role: "admin"
       }
     }
   },
   methods: {
-    onSubmit(event) {
-      event.preventDefault()
-      alert(JSON.stringify(this.form))
-    },
-    onReset(event) {
-      event.preventDefault()
-      // Reset our form values
-      this.form.email = ''
-      this.form.name = ''
-
-    }
+  },
+  mounted: function () {
+    const userinfo = JSON.parse(JSON.parse(localStorage.getItem("userinfo")));
+    this.form.firstname = userinfo.firstname;
+    this.form.lastname = userinfo.lastname;
+    this.form.email = userinfo.email;
+    this.form.username = userinfo.username;
+    this.form.role = userinfo.role;
+    console.log(userinfo.username)
   }
 }
 </script>

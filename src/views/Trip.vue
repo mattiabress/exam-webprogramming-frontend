@@ -135,13 +135,15 @@ export default {
       } catch (error) {
         const e = error.toJSON()
         if (e.status == 401) {
-          alert(e.message)
+          alert("Token scaduto")
           localStorage.removeItem('token');
           localStorage.removeItem('isAuthenticated');
           localStorage.removeItem('userinfo');
           this.$router.push({ path: '/login' })
+        } else if (e.status == 404) {
+          alert("Viaggio non trovato")
         } else
-          alert("Problema nell'inserimento del viaggio")
+          alert(e.message)
       }
 
 
@@ -154,20 +156,22 @@ export default {
           const response = await TripApi.createTrip(this.trip).catch(this.handleAxiosError);
           if (response.status == 201) {
             this.trip = response.data;
-            alert("Viaggio inserito correttamente")
-            this.$router.push({ path: '/trips' })
+            alert("Viaggio inserito correttamente");
+            this.$router.push({ path: '/trips' });
           } else
-            alert("Problema nell'inserimento del viaggio")
+            alert("Problema nell'inserimento del viaggio");
         } catch (error) {
           const e = error.toJSON()
           if (e.status == 401) {
-            alert(e.message)
+            alert("Token scaduto");
             localStorage.removeItem('token');
             localStorage.removeItem('isAuthenticated');
             localStorage.removeItem('userinfo');
-            this.$router.push({ path: '/login' })
+            this.$router.push({ path: '/login' });
+          } if (e.status == 409) {
+            alert("Problema nell'inserimento")
           } else
-            alert("Problema nell'inserimento del viaggio")
+            alert(e.message)
 
         }
 
@@ -184,19 +188,22 @@ export default {
             this.trip = response.data;
             alert("Viaggio aggiornato correttamente")
             this.$router.push({ path: '/trips' })
-          } else
-            alert("Problema nell'inserimento del viaggio")
+          }
         }
       } catch (error) {
         const e = error.toJSON()
         if (e.status == 401) {
-          alert(e.message)
+          alert("Token scaduto")
           localStorage.removeItem('token');
           localStorage.removeItem('isAuthenticated');
           localStorage.removeItem('userinfo');
           this.$router.push({ path: '/login' })
+        } else if (e.status == 409) {
+          alert("Non riuscito ad aggiornare")
+        } else if (e.status == 404) {
+          alert("Non trovato")
         } else
-          alert("Problema nell'inserimento del viaggio")
+          alert(e.message)
       }
     },
 
