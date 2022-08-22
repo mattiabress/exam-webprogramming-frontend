@@ -44,6 +44,11 @@ div {
   /* TODO: sistemare */
   border-color: #019875 !important;
 }
+/* over del pulsante */
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #E9ECEF !important;
+}
+
 
 .table {
   color: #006060;
