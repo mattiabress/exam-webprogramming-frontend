@@ -1,88 +1,95 @@
 <template>
   <div class="login">
-
-    <!-- Section: Design Block -->
-    <section class="background-radial-gradient overflow-hidden vh-100">
-      <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
-        <div class="row gx-lg-5 align-items-center mb-5">
-          <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-            <h1 class="my-5 display-5 fw-bold ls-tight" style="color: #0963c4;font-size: 3rem;">
+    <b-container fluid class="background-image-trip min-vh-100">
+      <b-container>
+        <b-row></b-row>
+        <b-row class="mt-5 mb-5">
+          <b-col>
+            <h1 style="color: #0963c4;font-size: 2.9rem;">
               <b>Il tuo diario dei viaggi </b><br />
-              <span style="color: rgb(3 153 117);font-size: 2.5rem;">Ti accompagna in tutti i viaggi</span>
+              <span style="color: rgb(3 153 117);font-size: 2.4rem;">Ti accompagna in tutti i viaggi</span>
             </h1>
-            <p class="mb-4" style="color: rgb(1 86 65);font-size:1.4rem;">
+            <p class="mb-4" style="color: rgb(1 86 65);font-size:1.1rem;">
               “Un viaggio non inizia nel momento in cui partiamo né finisce nel momento in cui raggiungiamo la meta. I
               realtà comincia molto prima e non finisce mai, dato che il nastro dei ricordi continua a scorrerci dentro
               anche dopo che ci siamo fermati. È il virus del viaggio, malattia sostanzialmente incurabile”<br> Ryszard
               Kapuscinski
             </p>
-          </div>
-
-          <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
-            <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
-            <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
-
+          </b-col>
+          <b-col>
             <div class="card bg-glass">
               <div class="card-body px-4 py-5 px-md-5">
-                <form>
-                  <!-- 2 column grid layout with text inputs for the first and last names -->
-                  <div class="row">
-                    <div class="col-md-6 mb-4">
-                      <div class="form-outline">
-                        <input type="text" id="firstname" class="form-control" v-model="firstname" />
-                        <label class="form-label" for="firstname">First name</label>
-                      </div>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                      <div class="form-outline">
-                        <input type="text" id="lastname" class="form-control" v-model="lastname" />
-                        <label class="form-label" for="lastname">Last name</label>
-                      </div>
-                    </div>
-                  </div>
+                <b-form>
 
-                  <!-- Email input -->
-                  <div class="form-outline mb-4">
-                    <input type="email" id="email" class="form-control" v-model="email" />
-                    <label class="form-label" for="email">Email address</label>
-                  </div>
-                  <div class="form-outline mb-4">
-                    <input type="text" id="username" class="form-control" v-model="username" />
-                    <label class="form-label" for="username">Username</label>
-                  </div>
+                  <b-form-row>
+                    <b-col>
+                      <input type="text" id="firstname" class="form-control" v-model="firstname" />
+                      <label class="form-label" for="firstname">First name</label>
+                    </b-col>
+                    <b-col>
+                      <input type="text" id="lastname" class="form-control" v-model="lastname" />
+                      <label class="form-label" for="lastname">Last name</label>
+                    </b-col>
+                  </b-form-row>
+                  <b-form-row>
+                    <b-col>
+                      <input type="email" id="email" class="form-control" v-model="email" />
+                      <label class="form-label" for="email">Email address</label>
+                    </b-col>
+                  </b-form-row>
 
-                  <!-- Password input -->
-                  <div class="form-outline mb-4">
-                    <input type="password" id="form3Example4" class="form-control" v-model="password" />
-                    <label class="form-label" for="form3Example4">Password</label>
-                  </div>
 
-                  <!-- Submit button -->
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-block mb-4" @click.prevent="signup()">
-                      Sign up
-                    </button>
-                  </div>
-                  Go to <router-link to="/login">Login</router-link>
-                </form>
+                  <b-form-row>
+                    <b-col>
+                      <input type="text" id="username" class="form-control" v-model="username" />
+                      <label class="form-label" for="username">Username</label>
+                    </b-col>
+                  </b-form-row>
+                  <b-form-row>
+                    <b-col>
+                      <input type="password" id="form3Example4" class="form-control" v-model="password" />
+                      <label class="form-label" for="form3Example4">Password</label>
+                    </b-col>
+                  </b-form-row>
+                  <b-form-row>
+                    <b-col>
+                      <button type="submit" class="btn btn-primary btn-block mb-4" @click.prevent="signup()">
+                        Sign up
+                      </button>
+                    </b-col>
+                  </b-form-row>
+                  <b-form-row>
+                    <b-col>
+                      Go to <router-link to="/login">Login</router-link>
+                    </b-col>
+                  </b-form-row>
+
+                </b-form>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Section: Design Block -->
+          </b-col>
+        </b-row>
+        <b-row></b-row>
+      </b-container>
+    </b-container>
+
   </div>
 
 </template>
 
 
 <style scoped>
-.background-radial-gradient {
-  /*background-color: #BFD834;*/
-  background-image: url('~@/assets/backgroundimagetrips.jpg') ;
-  background-size:100% auto;
+.background-image-trip {
+  background-image: url('~@/assets/backgroundimagetrips.jpg'), linear-gradient(#ccf1fa, #2571df, #ccf1fa);
+  background-size: 100% auto;
+  background-size: cover;
+  background-color: #c1edfb;
+  min-height: -webkit-fill-available;
+  align-items: center;
+  background-attachment: fixed;
+  background-position: center;
 }
+
 .btn-primary {
   color: #fff;
   background-color: #019875;
@@ -94,11 +101,13 @@
   background-color: #0198758f;
   border-color: #019875;
 }
+
 a {
-    color: #00DCDC;
-    text-decoration: none;
-    background-color: transparent;
+  color: #00DCDC;
+  text-decoration: none;
+  background-color: transparent;
 }
+
 .btn-primary:not(:disabled):not(.disabled):active,
 .btn-primary:not(:disabled):not(.disabled).active,
 .show>.btn-primary.dropdown-toggle {
@@ -112,7 +121,8 @@ a {
   color: #fff;
   background-color: #0198758f;
   border-color: #019875;
-  box-shadow: 0 0 0 0.2rem #BFD834; /* TODO: sistemare qui colore */
+  box-shadow: 0 0 0 0.2rem #BFD834;
+  /* TODO: sistemare qui colore */
 }
 
 .bg-glass {
