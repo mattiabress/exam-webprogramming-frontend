@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-
+    
     <!-- Section: Design Block -->
     <section class="background-radial-gradient overflow-hidden vh-100">
       <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
@@ -147,6 +147,26 @@
   color: #fff;
   background-color: #0198758f;
   border-color: #019875;
+}
+a {
+    color: #00DCDC;
+    text-decoration: none;
+    background-color: transparent;
+}
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.show>.btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #0198758f;
+  border-color: #019875;
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+  color: #fff;
+  background-color: #0198758f;
+  border-color: #019875;
+  box-shadow: 0 0 0 0.2rem #BFD834; /* TODO: sistemare qui colore */
 }
 
 .bg-glass {

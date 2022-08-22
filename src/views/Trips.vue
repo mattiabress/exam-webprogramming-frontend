@@ -18,10 +18,10 @@
                         v-model="searchEndDate" class="mb-2" @input="getAllTripsByDate()"></b-form-datepicker>
                 </b-col>
                 <b-col><button type="button" class="btn btn-success" @click="loadTrip()">
-                        <b-icon-arrow-repeat></b-icon-arrow-repeat>
+                        <b-icon-arrow-repeat></b-icon-arrow-repeat> 
                     </button></b-col>
                 <b-col>
-                    <router-link :to="{ name: 'trip' }"><button type="button" class="btn btn-success">Inserisci</button>
+                    <router-link :to="{ name: 'trip' }"><button type="button" class="btn btn-success"><b-icon-plus-lg></b-icon-plus-lg></button>
                     </router-link>
                 </b-col>
             </b-row>
