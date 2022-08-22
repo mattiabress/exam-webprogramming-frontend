@@ -20,12 +20,12 @@
         <b-row class="mt-2">
           <b-col>
             <b-form-group id="input-group-2" label="Nome:" label-for="input-2">
-              <b-form-input id="input-2" v-model="form.firstname" placeholder="Inserisci nome" required></b-form-input>
+              <b-form-input id="input-2" v-model="form.firstname" placeholder="Inserisci nome" required readonly></b-form-input>
             </b-form-group>
           </b-col>
           <b-col>
             <b-form-group id="input-group-2" label="Cognome:" label-for="input-2">
-              <b-form-input id="input-2" v-model="form.lastname" placeholder="Inserisci cognome" required>
+              <b-form-input id="input-2" v-model="form.lastname" placeholder="Inserisci cognome" required readonly>
               </b-form-input>
             </b-form-group>
           </b-col>
@@ -39,12 +39,12 @@
           </b-col>
           <b-col>
             <b-form-group id="input-group-1" label="Email address:" label-for="input-1">
-              <b-form-input id="input-1" v-model="form.email" type="email" placeholder="Inserisci email" required>
+              <b-form-input id="input-1" v-model="form.email" type="email" placeholder="Inserisci email" required readonly>
               </b-form-input>
             </b-form-group>
           </b-col>
         </b-row>
-        <b-row class="mt-2">
+        <!-- <b-row class="mt-2">
           <b-col>
             <b-form-group id="input-group-1" label="Old password" label-for="input-1">
               <b-form-input id="input-1" v-model="form.oldpassword" type="password" placeholder="Vecchia password"
@@ -59,8 +59,8 @@
               </b-form-input>
             </b-form-group>
           </b-col>
-        </b-row>
-        <b-row class="mt-2">
+        </b-row> -->
+        <!-- <b-row class="mt-2">
           <b-col>
             <b-form-group id="input-group-1" label="Role" label-for="input-1">
               <b-form-input id="input-1" v-model="form.role" type="text" placeholder="role" required readonly>
@@ -70,7 +70,7 @@
           <b-col>
 
           </b-col>
-        </b-row>
+        </b-row> -->
 
       </b-form>
     </div>

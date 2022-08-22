@@ -8,19 +8,19 @@
 
             </b-row>
             <b-row align-v="top">
-                <b-col><b>Filtra Per data: </b></b-col>
-                <b-col>
+                <b-col cols="12" md="2"><b>Filtra Per data: </b></b-col>
+                <b-col cols="6" md="3">
                     <b-form-datepicker :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                         v-model="searchStartDate" class="mb-2" @input="getAllTripsByDate()"></b-form-datepicker>
                 </b-col>
-                <b-col>
+                <b-col cols="6" md="3">
                     <b-form-datepicker :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                         v-model="searchEndDate" class="mb-2" @input="getAllTripsByDate()"></b-form-datepicker>
                 </b-col>
-                <b-col><button type="button" class="btn btn-success" @click="loadTrip()">
+                <b-col cols="6" md="2"><button type="button" class="btn btn-success" @click="loadTrip()">
                         <b-icon-arrow-repeat></b-icon-arrow-repeat> 
                     </button></b-col>
-                <b-col>
+                <b-col cols="6" md="1">
                     <router-link :to="{ name: 'trip' }"><button type="button" class="btn btn-success"><b-icon-plus-lg></b-icon-plus-lg></button>
                     </router-link>
                 </b-col>

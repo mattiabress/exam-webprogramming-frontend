@@ -10,7 +10,7 @@
               <span style="color: rgb(3 153 117);font-size: 2.4rem;">Ti accompagna in tutti i viaggi</span>
             </h1>
             <p class="mb-4" style="color: rgb(1 86 65);font-size:1.1rem;">
-              “Un viaggio non inizia nel momento in cui partiamo né finisce nel momento in cui raggiungiamo la meta. I
+              “Un viaggio non inizia nel momento in cui partiamo né finisce nel momento in cui raggiungiamo la meta. In
               realtà comincia molto prima e non finisce mai, dato che il nastro dei ricordi continua a scorrerci dentro
               anche dopo che ci siamo fermati. È il virus del viaggio, malattia sostanzialmente incurabile”<br> Ryszard
               Kapuscinski

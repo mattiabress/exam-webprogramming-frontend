@@ -11,7 +11,7 @@
             </router-link>
           </b-col>
           <b-col>
-            <h2>Viaggio a: {{ trip.name }}</h2>
+            <h1>Viaggio a: {{ trip.name }}</h1>
           </b-col>
           <b-col>
             <b-button v-if="editmode" variant="success" @click.prevent="editTrip()">Modifica</b-button>
@@ -53,7 +53,25 @@
           <l-geo-json :geojson="geojson"></l-geo-json>
         </l-map>
       </b-row>
-
+      <div>
+        <b-row class="mt-2">
+          <b-col>
+            <h3>Tappe</h3>
+          </b-col>
+        </b-row>
+        <b-table hover :items="getPoints(trip.path)" :fields="fields"  class="mt-3 mb-3" label-sort-asc=""
+          label-sort-desc="" label-sort-clear="">
+          <template #cell(index)="data">
+            {{ data.index + 1 }}
+          </template>
+          <template #cell(lat)="data">
+            {{ data.item.geometry.coordinates[1] }}
+          </template>
+          <template #cell(long)="data">
+            {{ data.item.geometry.coordinates[0] }}
+          </template>
+        </b-table>
+      </div>
     </div>
   </div>
 </template>
@@ -99,7 +117,23 @@ export default {
         path: null,
       },
       mapReady: false,
-      docState: "saved",
+      fields: [
+        {
+          key: 'index',
+          label: 'index',
+        },
+        {
+          key: 'lat',
+          label: 'Latitudine',
+          sortable: true
+        },
+        {
+          key: 'long',
+          label: 'Longitudine',
+          sortable: true,
+        },
+        
+      ],
     };
   },
   methods: {
@@ -243,9 +277,9 @@ export default {
       function onEachFeature(feature, layer) {
         drawnItems.addLayer(layer);
       }
-      console.log(geopath);
+      //console.log(geopath);
       if (geopath != null) {
-        console.log(geopath);
+        // console.log(geopath);
         L.geoJson(geopath, {
           onEachFeature: onEachFeature,
         });
@@ -256,7 +290,20 @@ export default {
       map.on("draw:drawstop");
 
     },
-
+    filterTable(row) {
+      console.log(row)
+      if (row.geometry.type === "Point") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    getPoints: function (geoJson) {
+      if (geoJson === null) return null;
+      let features = geoJson.features;
+      let points = features.filter(x => x.geometry.type === "Point");
+      return points;
+    }
   },
   async beforeMount() { //created: async function ()
     if ("tripID" in this.$route.params && this.$route.params.tripID != null) {
