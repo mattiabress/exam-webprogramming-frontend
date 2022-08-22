@@ -3,12 +3,12 @@
         <div class="container">
             <b-row class="mt-5">
                 <b-col>
-                    <h2>I miei viaggi</h2>
+                    <h1><b>I miei viaggi</b></h1>
                 </b-col>
 
             </b-row>
             <b-row align-v="top">
-                <b-col>Filtra Per data: </b-col>
+                <b-col><b>Filtra Per data: </b></b-col>
                 <b-col>
                     <b-form-datepicker :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                         v-model="searchStartDate" class="mb-2" @input="getAllTripsByDate()"></b-form-datepicker>
@@ -110,16 +110,16 @@ export default {
                 // A virtual column that doesn't exist in items
                 {
                     key: 'id',
-                    label: 'ID',
+                    label: 'Modifica',
                 },
                 {
                     key: 'name',
-                    label: 'Nome viaggio',
+                    label: 'Nome',
                     sortable: true
                 },
                 {
                     key: 'tripDate',
-                    label: 'Data viaggio',
+                    label: 'Data',
                     sortable: true
                 },
                 {

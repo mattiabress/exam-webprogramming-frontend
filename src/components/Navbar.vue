@@ -102,7 +102,9 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-
+.bg-success {
+    background-color: rgb(20 162 184)!important;
+}
 a {
   color: #42b983;
 }
@@ -110,7 +112,7 @@ a {
 b-navbar-brand :hover {
   display: inline-block;
 }
-
+/* azzurro chiaro background #e5fbff */
 .logo-img {
   height: 55px
 }

@@ -6,14 +6,14 @@
       <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
         <div class="row gx-lg-5 align-items-center mb-5">
           <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-            <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-              Il tuo diario dei viaggi <br />
-              <span style="color: #00AEAD">Ti accompagna in tutti i viaggi</span>
+            <h1 class="my-5 display-5 fw-bold ls-tight" style="color: #0963c4;font-size: 3rem;">
+              <b>Il tuo diario dei viaggi </b><br />
+              <span style="color: rgb(3 153 117);font-size: 2.5rem;">Ti accompagna in tutti i viaggi</span>
             </h1>
-            <p class="mb-4" style="color: #BFD834">
+            <p class="mb-4" style="color: rgb(1 86 65);font-size:1.4rem;">
               “Un viaggio non inizia nel momento in cui partiamo né finisce nel momento in cui raggiungiamo la meta. I
               realtà comincia molto prima e non finisce mai, dato che il nastro dei ricordi continua a scorrerci dentro
-              anche dopo che ci siamo fermati. È il virus del viaggio, malattia sostanzialmente incurabile” Ryszard
+              anche dopo che ci siamo fermati. È il virus del viaggio, malattia sostanzialmente incurabile”<br> Ryszard
               Kapuscinski
             </p>
           </div>
@@ -101,7 +101,7 @@
   backdrop-filter: saturate(200%) blur(25px);
 }
 }*/
-
+/*
 .background-radial-gradient {
   background-color: #BFD834;
   background-image: radial-gradient(500px circle at 0% 0%,
@@ -117,24 +117,11 @@
       #017F66 80%,
       transparent 100%);
 }
-
-#radius-shape-1 {
-  height: 220px;
-  width: 220px;
-  top: -60px;
-  left: -130px;
-  background: radial-gradient(#00AEAD, #00EBEB);
-  overflow: hidden;
-}
-
-#radius-shape-2 {
-  border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
-  bottom: -60px;
-  right: -110px;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(#BFD834, #1AFFFF);
-  overflow: hidden;
+*/
+.background-radial-gradient {
+  /*background-color: #BFD834;*/
+  background-image: url('~@/assets/backgroundimagetrips.jpg') ;
+  background-size:100% auto;
 }
 
 .btn-primary {
@@ -166,7 +153,7 @@ a {
   color: #fff;
   background-color: #0198758f;
   border-color: #019875;
-  box-shadow: 0 0 0 0.2rem #BFD834; /* TODO: sistemare qui colore */
+  box-shadow: 0 0 0 0.2rem #BFD834; 
 }
 
 .bg-glass {
