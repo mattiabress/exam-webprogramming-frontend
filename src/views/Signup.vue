@@ -4,7 +4,7 @@
       <b-container>
         <b-row></b-row>
         <b-row class="mt-5 mb-5">
-          <b-col>
+          <b-col cols="12" md="6">
             <h1 style="color: #0963c4;font-size: 2.9rem;">
               <b>Il tuo diario dei viaggi </b><br />
               <span style="color: rgb(3 153 117);font-size: 2.4rem;">Ti accompagna in tutti i viaggi</span>
