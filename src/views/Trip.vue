@@ -53,14 +53,15 @@
           <l-geo-json :geojson="geojson"></l-geo-json>
         </l-map>
       </b-row>
+
       <div>
         <b-row class="mt-2">
           <b-col>
             <h3>Tappe</h3>
           </b-col>
         </b-row>
-        <b-table hover :items="getPoints(trip.path)" :fields="fields"  class="mt-3 mb-3" label-sort-asc=""
-          label-sort-desc="" label-sort-clear="">
+        <b-table hover :items="tappe" :fields="fields" class="mt-3 mb-3" label-sort-asc="" label-sort-desc=""
+          label-sort-clear="">
           <template #cell(index)="data">
             {{ data.index + 1 }}
           </template>
@@ -116,6 +117,7 @@ export default {
         vehicle: null,
         path: null,
       },
+      tappe: [],
       mapReady: false,
       fields: [
         {
@@ -132,7 +134,7 @@ export default {
           label: 'Longitudine',
           sortable: true,
         },
-        
+
       ],
     };
   },
@@ -277,17 +279,29 @@ export default {
       function onEachFeature(feature, layer) {
         drawnItems.addLayer(layer);
       }
-      //console.log(geopath);
+
+
+      var tappe = null;
       if (geopath != null) {
-        // console.log(geopath);
+        tappe = this.getPoints(geopath);
         L.geoJson(geopath, {
           onEachFeature: onEachFeature,
         });
       }
+      const getPoints = this.getPoints;
+
       //after the drawing is edited
-      map.on("draw:editstop");
+      map.on("draw:editstop", function () {
+        tappe = getPoints(drawnItems.toGeoJSON());
+      });
       //after the drawing is finished
-      map.on("draw:drawstop");
+      map.on("draw:drawstop", function () {
+        tappe = getPoints(drawnItems.toGeoJSON());
+      });
+      map.on("draw:deletestop", function () {
+        tappe = getPoints(drawnItems.toGeoJSON());
+      });
+      this.tappe = tappe;
 
     },
     filterTable(row) {
@@ -298,10 +312,11 @@ export default {
         return false;
       }
     },
-    getPoints: function (geoJson) {
-      if (geoJson === null) return null;
-      let features = geoJson.features;
+    getPoints: function (geopath) {
+      if (geopath === null) return null;
+      let features = geopath.features;
       let points = features.filter(x => x.geometry.type === "Point");
+      this.tappe = points;
       return points;
     }
   },

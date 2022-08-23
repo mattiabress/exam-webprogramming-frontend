@@ -3,12 +3,12 @@
         <div class="container">
             <b-row class="mt-5">
                 <b-col>
-                    <h1><b>I miei viaggi</b></h1>
+                    <h1><strong>I miei viaggi</strong></h1>
                 </b-col>
 
             </b-row>
             <b-row align-v="top">
-                <b-col cols="12" md="2"><b>Filtra Per data: </b></b-col>
+                <b-col cols="12" md="2"><strong>Filtra Per data:</strong></b-col>
                 <b-col cols="6" md="3">
                     <b-form-datepicker :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                         v-model="searchStartDate" class="mb-2" @input="getAllTripsByDate()"></b-form-datepicker>
