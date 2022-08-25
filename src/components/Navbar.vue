@@ -82,7 +82,6 @@ export default {
   mounted: function () {
     this.isAuthenticated = localStorage.getItem('isAuthenticated') === "true";
     this.userinfo = JSON.parse(JSON.parse(localStorage.getItem('userinfo')));
-    //this.userinfo = JSON.parse(localStorage.getItem('userinfo'));
   }
 }
 </script>

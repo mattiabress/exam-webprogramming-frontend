@@ -143,7 +143,6 @@ export default {
       if (this.checkInputs()) {
         try {
           const response = await UserApi.login(credentials);
-          console.log(response)
           if (response.status == 200) {
             localStorage.setItem('userinfo', JSON.stringify(response.data.userinfo));
             localStorage.setItem('token', response.data.Authorization);

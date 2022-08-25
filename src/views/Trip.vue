@@ -26,7 +26,7 @@
             <label for="tripDate">Data del viaggio:</label>
           </b-col>
           <b-col>
-            <label for="vehicle">Veicolo:</label>
+            <label for="vehicle">Mezzo:</label>
           </b-col>
         </b-row>
         <b-row class="mt-2 mb-4">
@@ -88,7 +88,7 @@ import TripApi from "@/utilities/trip/tripApi";
 import L from "leaflet";
 import LDraw from "leaflet-draw";
 
-//TODO: rempove LGeoJson
+
 export default {
   name: "Trip",
   components: {
@@ -244,7 +244,7 @@ export default {
     },
 
     //map methods
-    setUpTheMap(geopath) {
+    setUpTheMap:function(geopath) {
       let map = this.$refs.myMap.mapObject;
       // FeatureGroup is to store editable layers
       var drawnItems = new L.FeatureGroup();
@@ -304,14 +304,6 @@ export default {
       this.tappe = tappe;
 
     },
-    filterTable(row) {
-      console.log(row)
-      if (row.geometry.type === "Point") {
-        return true;
-      } else {
-        return false;
-      }
-    },
     getPoints: function (geopath) {
       if (geopath === null) return null;
       let features = geopath.features;
@@ -320,14 +312,11 @@ export default {
       return points;
     }
   },
-  async beforeMount() { //created: async function ()
+  async beforeMount() { 
     if ("tripID" in this.$route.params && this.$route.params.tripID != null) {
-      //TODO: fix it
       this.editmode = true;
-      await this.loadTrip(Number(this.$route.params.tripID)); //TODO: sistemare
+      await this.loadTrip(Number(this.$route.params.tripID)); 
       this.trip.id = Number(this.$route.params.tripID);
-      //console.log(this.trip.path)
-      //this.mapIsReady = true;
       this.mapReady = true;
     } else {
       this.editmode = false;

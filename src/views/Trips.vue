@@ -18,10 +18,12 @@
                         v-model="searchEndDate" class="mb-2" @input="getAllTripsByDate()"></b-form-datepicker>
                 </b-col>
                 <b-col cols="6" md="2"><button type="button" class="btn btn-success" @click="loadTrip()">
-                        <b-icon-arrow-repeat></b-icon-arrow-repeat> 
+                        <b-icon-arrow-repeat></b-icon-arrow-repeat>
                     </button></b-col>
                 <b-col cols="6" md="1">
-                    <router-link :to="{ name: 'trip' }"><button type="button" class="btn btn-success"><b-icon-plus-lg></b-icon-plus-lg></button>
+                    <router-link :to="{ name: 'trip' }"><button type="button" class="btn btn-success">
+                            <b-icon-plus-lg></b-icon-plus-lg>
+                        </button>
                     </router-link>
                 </b-col>
             </b-row>
@@ -55,14 +57,13 @@
                 </template>
 
             </b-table>
-            
+
         </div>
     </div>
 
 </template>
 
 <style scoped>
-/* color:#5cb874 */
 .table {
     color: #006060;
 }
@@ -179,7 +180,6 @@ export default {
         },
     },
     mounted: async function () {
-
         await this.loadTrip();
     }
 }

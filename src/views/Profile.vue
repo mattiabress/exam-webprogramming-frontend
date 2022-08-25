@@ -106,7 +106,6 @@ export default {
     this.form.email = userinfo.email;
     this.form.username = userinfo.username;
     this.form.role = userinfo.role;
-    console.log(userinfo.username)
   }
 }
 </script>

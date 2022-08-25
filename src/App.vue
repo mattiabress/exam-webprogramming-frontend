@@ -35,13 +35,12 @@
 
 div {
   color: #00AEAD;
-  font-family: cursive; /* controllare com'è */
+  font-family: cursive; 
 }
 
 .btn-success {
   color: #fff;
   background-color: #019875 !important;
-  /* TODO: sistemare */
   border-color: #019875 !important;
 }
 /* over del pulsante */
@@ -85,7 +84,6 @@ export default {
 
     logout: async function () {
       const response = await Api.logout();
-      console.log(response);
       if (response.status != 200)
         alert("Non sono riuscito a fare logout");
       else {
@@ -93,12 +91,6 @@ export default {
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('userinfo');
         this.$router.push({ path: '/login' })
-      //  localStorage.setItem('token', null);
-      //   localStorage.setItem('isAuthenticated', false);
-      //   localStorage.setItem('userinfo', null);
-      //   this.isAuthenticated = false;
-        // localStorage.clear();
-        // this.$router.push({ path: '/login' })
       }
     }
   },

@@ -122,7 +122,6 @@ a {
   background-color: #0198758f;
   border-color: #019875;
   box-shadow: 0 0 0 0.2rem #BFD834;
-  /* TODO: sistemare qui colore */
 }
 
 .bg-glass {
@@ -148,7 +147,7 @@ export default {
     }
   },
   methods: {
-    isValidEmail(email) {
+    isValidEmail:function(email) {
       let pattern = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
       if (pattern.test(email)) {
         return true;
@@ -190,7 +189,6 @@ export default {
       if (this.checkInputs()) {
         try {
           const response = await UserApi.register(credentials);
-          console.log(response)
           if (response.status == 200) {
             localStorage.setItem('userinfo', JSON.stringify(response.data.userinfo));
             localStorage.setItem('token', response.data.Authorization);
